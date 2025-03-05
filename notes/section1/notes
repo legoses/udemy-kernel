@@ -1,0 +1,4 @@
+# real mode is a mode that allows intel processors to run like they did 20-30 years ago
+- legacy mode
+# protected mode
+- what 32 bit operating systems use

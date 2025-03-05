@@ -1,0 +1,6 @@
+# memory
+- ROM (read only memory)
+- Permanent, will retain storage even after data loss
+- Used for storing permanent programs that will never change, like BIOS
+- Cant be written to in a regular fashion
+- generally accessed in a linear fashion

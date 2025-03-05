@@ -1,0 +1,30 @@
+# steps to a booted system
+- BIOS is executed from ROM
+- BIOS loads bootloader into 0x7C00
+- BIOS executed bootloader, which loads the kernel
+
+# what is a bootloader
+- Small program that loads the kernel of an operating system
+- Generally writted by the creater of the oeprating system
+
+- on first boot, we will be in real mode, which gives access to 1mb of memory and 16bit processes
+- then boot into protected mode, which gives 4,b of memory, and 32 bit porocesses
+
+# on boot, CPU loads bios
+- BIOS executes diretly from ROM
+- BIOS will init essential hardware
+- BIOS looks for a bootloader by search all storage meduims for the signatue "0x55AA" and loads it to 0x7C00
+- Sector - block of storage. Many disks have 512 byte sectors
+
+# BIOS is execued directly from ROM
+- CPU executed instructions from the BIOS ROm
+- BIOS generally loads itsself into ram
+- BIOS inits all essential hardware
+- BIOS searches storage meduims for boot signature "0x55AA"
+- BIOS loads bootloader into RAM at absolute address 0x7c00
+- BIOS instructs process to jump to absolute addders 0x7c00 and begin executing the systems bootloader
+
+# BIOS is a kernel its self
+- contains routines to assist bootloader
+- 16 bit code, which means only 16 bit code can execute properly
+- routiens are generic and standard so they can work between different BIOS's
