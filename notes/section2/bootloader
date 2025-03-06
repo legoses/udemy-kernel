@@ -1,0 +1,9 @@
+# assembly syntax
+- dw means two bytes
+- when inderted at the end of a programa out side of a methid, a dw will append its raw binary to the end of the file
+- $ probably means current memory address and $$ probably means the beginning of the file
+
+# bootloader
+- file is 512 bytes to match our boot sector size. 510 bytes for the code, and 2 bytes at the end for the dw file signature
+- the bootloader is assembled straight to binary because it is executing on the raw cpu with out any concept of files
+- a binary file is just a file without headers

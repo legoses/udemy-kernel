@@ -1,0 +1,18 @@
+# real mode
+- all intel processors have this
+- 16 bit mode they start in when switched on, compatibility mode
+- 1 mb of ram
+- based on origional x86 design
+ - 8086 processor
+- no security at all
+ - kernel/ OS can be destroyed
+ - no hardware or software security
+- memory is accessed through the segmntation memory model
+- all code in real mode is required to be 16 bits
+ - this can be changed to 32 bits on a per command basis
+
+# user land/ kernel land
+- kernel land is any code operating with the maximum poeeible priviledges
+ - aka ring 0
+ - user land is ring 3
+  - must ask kernel to od things
