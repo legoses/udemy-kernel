@@ -1,0 +1,39 @@
+# segmentation memroy
+- memory is accessed by segment and offset
+ - programs can be loaded into different parts of memory and run withot issues
+ - multiple programs are loaded into semgent registers
+
+# segment registers
+- a ways to access memroy in ram
+- CS - code segment
+- SS stack segment
+- DS - data segment
+- ES - extra segment
+
+# calculate absolute offset
+- take segment register, multiply it by 16, and add the offset
+- code segment = 0x7c0
+- assemgly origin 'org' is zero
+- first instruction is at origin zzero, offset is zero
+- (0x7c0 * 16) = 0x7c00
+- 0x7c00 + 0 = 0x7c00 - absolute offset of first instruction
+
+# different instructions use different register combinations
+- "lodsb" uses the DS:SI register combination
+
+# loading programs into different areas of memory without issues
+- two programs were loaded into memory, and both assembled with the origin being zero
+- program 1 uses semgent 0x7c0 for all its segment registers
+- progrsm 1 is loaded at address 0x7c00
+- program 2 uses segment 7x7d0 for its segment registers
+- program 2 is located at address 0x7d00
+- swap registers when switching to other process
+
+# Stack segment
+- SS = 0x00
+- SP (Stack pointer) - 0x7c00
+- offset is calculated by (SS * 16) + SP
+- Push 0xffff
+- decrement stack poitner by 2
+- SP = 0x7BFE
+- sets 0x7BFE-0x7BFF to 0xffff

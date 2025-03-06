@@ -1,7 +1,21 @@
-ORG 0x7c00 ; 
+; look into segment registers
+ORG 0 ; 
 BITS 16 ; specify this is 16 bit code
 
+    jmp 0x7c0:start ; starts program at a specific memory address
 start:
+    ; interrupts cause the processor to stop what it is going and execute the code handed to it
+    cli ; clear interrupts so we are not interrupted while setting up emmory segments
+    ; after we cleard interrupts, we can manually set the origin instead of hopign the bios has properly set it
+    mov ax, 0x7c0
+    mov ds, ax ; move 0x7c0 into data segmeht
+    mov es, ax ; move 0x7c0 into extra segment
+    mov ax, 0x00
+    mov ss, ax ; set stack segment to 0
+    mov sp, 0x7c00 ; set stack pointer to 0x7c00
+
+    sti ; enables interrupts
+
     mov si, message
     call print
     jmp $ ; jump to self. $ likely means current memory addressm and $$ means starting?
