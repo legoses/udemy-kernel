@@ -1,9 +1,20 @@
 ; look into segment registers
 ORG 0 ; 
 BITS 16 ; specify this is 16 bit code
+_start:
+    ; short jmp are usually used for jumping somehwere in the same module
+    ; 2 byte instruction, literally jumping a short distance
+    ; often uses a relative offet, so it is easier to relocate in memory
+    jmp short start
+    nop ; no operation
 
-    jmp 0x7c0:start ; starts program at a specific memory address
+; create empty bytes for bios boot parameter block
+; can safely be overwritten
+times 33 db 0 ; created 33 bytes after short jump
 start:
+    jmp 0x7c0:step2; starts program at a specific memory address
+
+step2:
     ; interrupts cause the processor to stop what it is going and execute the code handed to it
     cli ; clear interrupts so we are not interrupted while setting up emmory segments
     ; after we cleard interrupts, we can manually set the origin instead of hopign the bios has properly set it

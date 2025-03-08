@@ -1,0 +1,7 @@
+# When booting from a usb stick, some BIOSs will replace values in memory with their own values
+- Some BIOSs have a parameter block and will assume its there and write data to it, overwriting
+  data the was previously there
+
+# BIOS parameter block
+- osdev.org - some stuff is out of date
+- Size of param block is 33
