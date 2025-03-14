@@ -1,0 +1,16 @@
+# interrupts are simialr to subrouines, but dont need to nkow the memory address to call them
+- Called through the use of interrupt numbers
+
+# Steps
+- Process is interrupted
+- Old state is saved to the satck
+- inteerrupt is executecd
+
+# interrupt vectir table
+- describes where the interrupt is in memory
+- starts at 0x00 in ram
+- describes 256 interrupt handles
+- 4 byte segments
+- offset is 2 bytes, segment is 2 bytes
+
+# process can call exceptions by calling interrupts
