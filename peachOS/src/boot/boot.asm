@@ -101,6 +101,11 @@ load32: ; load the bytes defined in DATA_SEG into the following registers
     mov ss, ax
     mov ebp, 0x00200000 ; set base pointer
     mov esp, ebp ; set stack pointer firhter in memory
+
+    in al, 0x92
+    or al, 2
+    out 0x92, al
+
     jmp $ ; infinite jump
 
 

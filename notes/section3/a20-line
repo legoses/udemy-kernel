@@ -1,0 +1,8 @@
+# A20 line
+- Physical reprentation of the 21st bit, (20 counting from 0) of any memory address
+- Was disabled by default to keep compatibiliity with 16 bit architecture
+
+# fast A20 gate
+- 'in' instruction reads from the processor bus
+- 'out' instruciton writes to the processor bus
+- this bus is used to communicate with hardware connected to the motherboard
