@@ -1,0 +1,31 @@
+# What is protecetd mode?
+- processor statin in x86 artichetectures
+- 4gb addressable memory
+- hardware protection
+- different memroy schemes
+
+# memory and hardware protection
+- protected mode allows you to prevent memory and hardware from being accessed by user programs
+- 7 rings
+  - ring 0 is most priveledged - kernel
+  - ring 1 and 2, mosly arent used, sometimes used by device drivers
+  - ring 3 is least priveledged, runs user code
+  - ring 3 can not access some interrupts
+
+# Memory schemes
+- Segement registers become selectors
+- Paging - remmapping memory addresses
+
+# Selector memroy scheme
+- Segmentation registers become selector registers
+- slectors point to data structors that describe memory ranges and the permissions to access a given range
+
+# Paging memory scheme
+- Memory is virtual and whta you adcdress can pointe to somewhere entirely different in memory
+- memory protection is easier to control
+- Page directorty is a table of pointers that point to page tables
+  - tables map out range of addresses
+- allows all programs to believe they are loaded at the same address
+- cant see other programs running
+- multiple processes can be mapped at the same address
+

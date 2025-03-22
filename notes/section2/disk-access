@@ -1,0 +1,29 @@
+# Files do nt exist
+- file systems are kernel implemented, not responsibility of hard disk
+- disk only holds data block, called sectors
+- kernel must have driver that targets diver system on the disk
+
+# data is typically written in sectors
+- data is typically read and written in 512 byte blocks
+
+# CHS (Cylinder head sector)
+- old style of reading disk
+- sectors are selected and read by specifying a head, track, and sector
+
+# LBA (Logical block address)
+- modern way of reading through adisk
+- rather than specifying head, track, and sector, just specity a number that starts from zero
+- allows us to read from disk as if we were reading from a very large file
+- LBA 0 - first sector
+- LBA 1 - second sector
+
+# Calculating LBA
+- Lets read byte as position 58376
+  - LBA - 58376 / 512 = 114
+  - READ LBA and load 512 bytes into memory
+  - next we need to know uot offset that our byte is in the buffer
+  - offset = 58376 % 512 = 8
+    - 8 bytes into buffer
+
+# BIOS disk routines
+- in 16 bit real mode, bios provides 13h register for disk operations
