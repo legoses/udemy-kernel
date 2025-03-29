@@ -95,7 +95,7 @@ gdt_descriptor:
 load32:
     mov eax, 1 ; starting sector we are going to load from. sector 0 is boot sector
     mov ecx, 100 ; total number of sectors we want to load
-    move edi, 0x0100000 ; address we want to load them into
+    mov edi, 0x0100000 ; address we want to load them into
     call ata_lba_read
 
 
@@ -104,7 +104,7 @@ ata_lba_read:
     ; send the highest 8 bits of the lba to hard disk controller
     shr eax, 24 ; shift eax register 24 bits to the right to get the high 8 bits
     mov dx, 0x1F6
-    out fx, al ; al register is 8 bits and contains highest 8 bits of lba
+    out dx, al ; al register is 8 bits and contains highest 8 bits of lba
 
     ; in and out instructions read and write to a port, addresses are locations of port in memroy
     ; additionally, cpu can olny talk to either memory or IO at one time
