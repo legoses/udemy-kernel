@@ -1,5 +1,10 @@
 [BITS 32]
-load32:
+global _start
+
+CODE_SEG equ 0x08 ; kernel code segment address
+DATA_SEG equ 0x10 ; kernel data segment address
+
+_start:
     mov ax, DATA_SEG
     mov ds, ax
     mov es, ax
