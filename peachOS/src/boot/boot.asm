@@ -54,7 +54,8 @@ step2:
     mov eax, cr0
     or eax, 0x1
     mov cr0, eax
-    jmp CODE_SEG:load32 ; jmp to address stored at code_seg selector defined at the top of the file
+    ; jmp CODE_SEG:load32 ; jmp to address stored at code_seg selector defined at the top of the file
+    jmp $
 
 ; GDT (GLobal Descriptor Table)
 ; contains enteries telling the CPU about memoryu segments
@@ -91,22 +92,6 @@ gdt_descriptor:
     dd gdt_start
 
 
-[BITS 32] ; past here, all code is 32 bit code
-load32: ; load the bytes defined in DATA_SEG into the following registers
-    mov ax, DATA_SEG
-    mov ds, ax
-    mov es, ax
-    mov fs, ax
-    mov gs, ax
-    mov ss, ax
-    mov ebp, 0x00200000 ; set base pointer
-    mov esp, ebp ; set stack pointer firhter in memory
-
-    in al, 0x92
-    or al, 2
-    out 0x92, al
-
-    jmp $ ; infinite jump
 
 
 times 510-($ - $$) db 0 ; specified we need ot fill at least 510 bytes of data. if our code does not fill 510 bytes, this will pad the rest with 0's
