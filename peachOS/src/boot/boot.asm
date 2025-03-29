@@ -1,6 +1,7 @@
 ; look into segment registers
 ORG 0x7c00 ; 
 BITS 16 ; specify this is 16 bit code
+; BIOS
 
 CODE_SEG equ gdt_code - gdt_start
 DATA_SEG equ gdt_data - gdt_start
@@ -54,8 +55,7 @@ step2:
     mov eax, cr0
     or eax, 0x1
     mov cr0, eax
-    ; jmp CODE_SEG:load32 ; jmp to address stored at code_seg selector defined at the top of the file
-    jmp $
+    jmp CODE_SEG:load32 ; jmp to address stored at code_seg selector defined at the top of the file
 
 ; GDT (GLobal Descriptor Table)
 ; contains enteries telling the CPU about memoryu segments
@@ -91,8 +91,56 @@ gdt_descriptor:
     dw gdt_end - gdt_start-1 ; get size of descriptorp
     dd gdt_start
 
+[BITS 32] ; anything below this line is 32 bit code
+load32:
+    mov eax, 1 ; starting sector we are going to load from. sector 0 is boot sector
+    mov ecx, 100 ; total number of sectors we want to load
+    move edi, 0x0100000 ; address we want to load them into
+    call ata_lba_read
 
 
+ata_lba_read:
+    mov ebx, eax ; back up lba (1st sector i think?) for later
+    ; send the highest 8 bits of the lba to hard disk controller
+    shr eax, 24 ; shift eax register 24 bits to the right to get the high 8 bits
+    mov dx, 0x1F6
+    out fx, al ; al register is 8 bits and contains highest 8 bits of lba
+
+    ; in and out instructions read and write to a port, addresses are locations of port in memroy
+    ; additionally, cpu can olny talk to either memory or IO at one time
+    ; when using in or out, the cpu will specify that it is talking to IO ports and not memory
+    mov eax, ecx
+    mov dx, 0x1F2
+    out dx, al
+
+    ; finished sending totoal sectors to read
+
+    ; send more bits of the lba
+    mov eax, ebx ; reestoring backup lba we saved earlier
+    mov dx, 0x1F3
+    out dx, al
+    ; finished sending more bits of the lba
+
+
+    ; send mroe bits of the lba
+    mov dx, 0x1F4
+    mov eax, ebx ; restore backup lba
+    shr eax, 8
+    out dx, al
+    ; finished sending more bits of lba
+
+    ; send upper 16 bits of the lba
+    mov dx, 0x1F5
+    mov eax, ebx ; resore backup lba
+    shr eax, 16 ; shift eax register 16 bits to the right
+    out dx, al ; out put data to controller
+    ; dx register has to do with reading and writing to the cpu IO bus
+
+    ; finished sending upper 16 bits of lba
+
+
+
+    
 
 times 510-($ - $$) db 0 ; specified we need ot fill at least 510 bytes of data. if our code does not fill 510 bytes, this will pad the rest with 0's
 ; dw will append this value to the end of this file. dw stands for 2 bytes
