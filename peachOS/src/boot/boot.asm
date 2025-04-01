@@ -97,12 +97,14 @@ load32:
     mov ecx, 100 ; total number of sectors we want to load
     mov edi, 0x0100000 ; address we want to load them into
     call ata_lba_read
+    jmp CODE_SEG:0x0100000
 
 
 ata_lba_read:
     mov ebx, eax ; back up lba (1st sector i think?) for later
     ; send the highest 8 bits of the lba to hard disk controller
     shr eax, 24 ; shift eax register 24 bits to the right to get the high 8 bits
+    or eax, 0xE0 ; selects the masters drive
     mov dx, 0x1F6
     out dx, al ; al register is 8 bits and contains highest 8 bits of lba
 
@@ -138,8 +140,33 @@ ata_lba_read:
 
     ; finished sending upper 16 bits of lba
 
+    mov dx, 0x1f7
+    mov al, 0x20
+    out dx, al
 
+    ; read all sectors into memory
+.next_sector:
+    push ecx
 
+    ; checking if we need to read
+.try_again:
+    mov dx, 0x1f7
+    in al, dx
+    test al, 8
+    jz .try_again ; if al does not equal 8, jump to try again. These numbers are explaiend in the os dev wiki
+
+; we need to read 256 words at a time
+    mov ecx, 256
+    mov dx, 0x1F0
+    ; rep instruction will repeat the following the amount of times specified in ecx register
+    ; this wille exevute insw 256 imes
+    rep insw ; reads word from 0x1f0 and stores it in 0x0100000
+    pop ecx
+    loop .next_sector
+
+    ; end of reating sectors into memory
+
+    ret
     
 
 times 510-($ - $$) db 0 ; specified we need ot fill at least 510 bytes of data. if our code does not fill 510 bytes, this will pad the rest with 0's
