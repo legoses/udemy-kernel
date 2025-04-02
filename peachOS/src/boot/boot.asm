@@ -93,11 +93,23 @@ gdt_descriptor:
 
 [BITS 32] ; anything below this line is 32 bit code
 load32:
+    jmp print_test
     mov eax, 1 ; starting sector we are going to load from. sector 0 is boot sector
     mov ecx, 100 ; total number of sectors we want to load
     mov edi, 0x0100000 ; address we want to load them into
     call ata_lba_read
     jmp CODE_SEG:0x0100000
+
+print_test:
+    mov rdx, 4 ; test length
+    mov rsi, test
+    mov rdi, 1
+    mov rax, 1
+    syscall
+
+    ret
+
+
 
 
 ata_lba_read:
@@ -172,6 +184,9 @@ ata_lba_read:
 times 510-($ - $$) db 0 ; specified we need ot fill at least 510 bytes of data. if our code does not fill 510 bytes, this will pad the rest with 0's
 ; dw will append this value to the end of this file. dw stands for 2 bytes
 dw 0xAA55 ; boot signature. Backwards because intel is little endian, so bytes get flipped when used
+
+section .data:
+test db "test"
 
 ; bios only loads one sector, so this will never be loaded
 ; by it can be referenced with a label
