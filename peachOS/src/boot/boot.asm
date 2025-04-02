@@ -82,7 +82,7 @@ gdt_data: ; should be linked to DS, SS, EF, FS, GS
     db 0   ; base 16-23 bits
 
     db 0x92  ; access byte a bitmask, can also set configuration
-    db 1100111b ; high 4 bit flags and low 4 bit flags
+    db 11001111b ; high 4 bit flags and low 4 bit flags
     db 0  ; base 24-31 bits
 
 gdt_end: ; lable to describe the end address of the table
