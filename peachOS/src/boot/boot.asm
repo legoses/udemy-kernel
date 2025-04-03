@@ -6,7 +6,7 @@ BITS 16 ; specify this is 16 bit code
 CODE_SEG equ gdt_code - gdt_start
 DATA_SEG equ gdt_data - gdt_start
 
-_start:
+_begin:
     ; short jmp are usually used for jumping somehwere in the same module
     ; 2 byte instruction, literally jumping a short distance
     ; often uses a relative offet, so it is easier to relocate in memory
@@ -16,6 +16,7 @@ _start:
 ; create empty bytes for bios boot parameter block
 ; can safely be overwritten
 times 33 db 0 ; created 33 bytes after short jump
+
 start:
     jmp 0:step2; starts program at a specific memory address
 
@@ -188,4 +189,4 @@ dw 0xAA55 ; boot signature. Backwards because intel is little endian, so bytes g
 
 ; bios only loads one sector, so this will never be loaded
 ; by it can be referenced with a label
-buffer: ; what we will write to. Placed at the end to make sure out code is not overwritten
+; buffer: ; what we will write to. Placed at the end to make sure out code is not overwritten
