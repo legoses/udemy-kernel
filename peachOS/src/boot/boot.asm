@@ -6,7 +6,7 @@ BITS 16 ; specify this is 16 bit code
 CODE_SEG equ gdt_code - gdt_start
 DATA_SEG equ gdt_data - gdt_start
 
-_begin:
+_start:
     ; short jmp are usually used for jumping somehwere in the same module
     ; 2 byte instruction, literally jumping a short distance
     ; often uses a relative offet, so it is easier to relocate in memory
