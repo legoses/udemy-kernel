@@ -1,1 +1,3 @@
-kernel_start
+terminal_make_char call:[return]
+terminal_initialize global:[video_mem] call:[terminal_make_char] noreturn:[terminal_make_char]
+kernel_start global:[video_mem] call:[terminal_initialize,terminal_make_char] noreturn:[terminal_make_char]

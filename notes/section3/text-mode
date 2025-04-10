@@ -1,0 +1,14 @@
+# text mode
+- Allows you to write ascii to video memory
+- 16 inque colors
+- Write chartacters to screen without setting individual pixels
+
+# Writing to video memory
+- Starts at address 0xB8000 for colored displays
+- Monochrome isplays start as 0xB0000
+- Each character takes up two bytes
+ - byte zero is ascii character
+ - byte one is the color code
+- Write black "A" to column 0 row 0
+ - 0xb8000 = 'A'
+ - 0xb8001 = 0x00 (code for black)
