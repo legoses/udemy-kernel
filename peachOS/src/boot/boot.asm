@@ -73,7 +73,7 @@ gdt_code: ; CS should point to this ; enteries are 8 bytes. mostly default value
     db 0   ; base 16-23 bits
 
     db 0x9a  ; access byte a bitmask, can also set configuration
-    db 1100111b ; high 4 bit flags and low 4 bit flags
+    db 11001111b ; high 4 bit flags and low 4 bit flags
     db 0  ; base 24-31 bits
 
 ; offset 0x10
