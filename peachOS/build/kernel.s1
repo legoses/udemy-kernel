@@ -1,3 +1,7 @@
 terminal_make_char call:[return]
-terminal_initialize global:[video_mem] call:[terminal_make_char] noreturn:[terminal_make_char]
-kernel_start global:[video_mem] call:[terminal_initialize,terminal_make_char] noreturn:[terminal_make_char]
+terminal_putchar global:[video_mem] call:[terminal_make_char] noreturn:[terminal_make_char]
+terminal_writechar global:[terminal_col,terminal_row] call:[terminal_putchar]
+terminal_initialize global:[terminal_col,terminal_row,video_mem] call:[terminal_putchar] noreturn:[terminal_putchar]
+strlen
+print call:[strlen,terminal_writechar] noreturn:[terminal_writechar]
+kernel_start call:[print,terminal_initialize] noreturn:[print]
