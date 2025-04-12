@@ -1,0 +1,25 @@
+# Interrupt descriptor table
+- how interrupts are invoked in protected mode
+- can be mapped anywhere in memory
+
+# Interrupt descriptor
+- 
+
+# Gate types
+- 32 bit task gate - 0x05/0b0101 - references TSS descriptors and can assist in multi tasking when exceptions occur
+- 16 bit interrupt gate - 0x06/0b0110 - used for interrupts we want to invoke ourselfs in code
+- 16 bit task gate - 0x07/0b0111 - Used for exceptions. Also disablle interrupts on entry (like iret) and re enables them on an "iret" instruction
+- 32 bit interrupt gate - same as 16 bnit
+- 32 bit trap gate - same as 16 bit
+
+# Interrupt desciprtor array
+- Interrupts descritors are stored in an array with an index of 0 defining interrupt 0 "int 0", index 1 definint interrupt 1, and so on
+
+# IDTR
+- structor that points to itnerrupts descriptor table and specifies size
+- length is stored as (length - 1)
+- limit - bits 0-15 - length of descriptor table minus 1
+- base - bits 16-47 - the address of the interrupt descriptor table
+
+# load interrupt descriptor table
+- call idt_load function  which we will define later
