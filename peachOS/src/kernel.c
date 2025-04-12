@@ -21,7 +21,15 @@ void terminal_initialize() {
 }
 
 
+size_t strlen(const char *str) {
+    size_t len = 0;
 
+    while(str[len]) { // while value of str[len] != 0 or '\0'
+        len++;
+    }
+
+    return len;
+}
 
 void kernel_start() {
     // video_mem[0] = 0x0341; color and ascii code appear reversed because of endianess
