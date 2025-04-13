@@ -1,6 +1,8 @@
 [BITS 32]
 
 global _start
+global problem
+
 extern kernel_start
 
 CODE_SEG equ 0x08 ; kernel code segment address
@@ -23,5 +25,9 @@ _start:
 
     call kernel_start
     jmp $
+
+problem:
+    mov eax, 0
+    div eax
 
 times 512-($ - $$) db 0 ; padd out the section to make sure aligment with c file is correct

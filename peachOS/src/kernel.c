@@ -1,6 +1,7 @@
 #include "kernel.h"
 #include <stdint.h>
 #include <stddef.h>
+#include "idt/idt.h"
 
 
 uint16_t *video_mem = 0;
@@ -77,6 +78,9 @@ void print(const char *str) {
 }
 
 
+extern void problem();
+
+
 void kernel_start() {
     // video_mem[0] = 0x0341; color and ascii code appear reversed because of endianess
     terminal_initialize();
@@ -84,5 +88,7 @@ void kernel_start() {
     //terminal_writechar('A', 15);
     //terminal_writechar('B', 15);
     print("Hello, world!\ntest");
-
+    idt_init(); // initialize interrupt descriptor table
+    print("a");
+    problem();
 }
