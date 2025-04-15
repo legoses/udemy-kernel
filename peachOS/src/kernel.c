@@ -19,7 +19,7 @@ uint16_t terminal_make_char(char c, char color) {
 
 // print a character to the screen with specified location and color
 void terminal_putchar(int x, int y, char c, char color) {
-    video_mem[(y * VGA_WIDTH) + x ] = terminal_make_char(c, color);
+    video_mem[(y * VGA_WIDTH) + x] = terminal_make_char(c, color);
 }
 
 
@@ -70,7 +70,7 @@ size_t strlen(const char *str) {
 
 // write a string to the screen
 void print(const char *str) {
-    size_t len = strlen(str);
+    size_t len = strlen(str;
 
     for(int i = 0; i < len; i++) {
         terminal_writechar(str[i], 15);
@@ -89,6 +89,6 @@ void kernel_start() {
     //terminal_writechar('B', 15);
     print("Hello, world!\ntest");
     idt_init(); // initialize interrupt descriptor table
-    print("a");
+    //print("a");
     problem();
 }
