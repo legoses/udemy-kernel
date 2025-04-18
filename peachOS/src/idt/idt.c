@@ -12,7 +12,7 @@ extern void idt_load(struct idtr_desc *ptr);
 
 
 void idt_zero() {
-    print("Divide by zero error");
+    print("Divide by zero error\n");
 }
 
 

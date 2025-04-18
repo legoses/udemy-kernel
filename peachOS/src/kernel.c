@@ -70,7 +70,7 @@ size_t strlen(const char *str) {
 
 // write a string to the screen
 void print(const char *str) {
-    size_t len = strlen(str;
+    size_t len = strlen(str);
 
     for(int i = 0; i < len; i++) {
         terminal_writechar(str[i], 15);
