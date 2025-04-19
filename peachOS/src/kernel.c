@@ -2,6 +2,7 @@
 #include <stdint.h>
 #include <stddef.h>
 #include "idt/idt.h"
+#include "io/io.h"
 
 
 uint16_t *video_mem = 0;
@@ -78,7 +79,6 @@ void print(const char *str) {
 }
 
 
-extern void problem();
 
 
 void kernel_start() {
@@ -90,5 +90,5 @@ void kernel_start() {
     print("Hello, world!\ntest");
     idt_init(); // initialize interrupt descriptor table
     //print("a");
-    problem();
+    outb(0x60, 0xff);
 }
