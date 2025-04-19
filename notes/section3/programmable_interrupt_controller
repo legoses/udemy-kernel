@@ -1,0 +1,45 @@
+# Programmable Itnerrupt Controller
+
+## Allows hardware to interrupt the processors state
+- Things like a key press or a mouse click will invoke an interrupt
+
+## Standard ISA IRQ's
+IRQ     |  Description
+0       | Timer interrupt. Happens on regular basis, useful for things like multitasking
+1       | keyboard interrupt
+2       | Cascade
+3       | COM2 if enabled
+4       | COM1 if enabled
+5       | LPT2 if enabled
+6       | Floppy disk
+7       | LPT1
+8       | CMOS real time clock if enabled
+9       | Free for peripherals
+10      | Free for peripherals
+11      | Free for peripherals
+12      | PS2 mouse
+13      | FPU/ coprocessor/ intel processor
+14      | Primary ATA hard disk
+15      | Secondary ATA hard disk
+
+## Understanding IRQs
+- They are mapped to an interrupt number
+- if 0x20 is mapped:
+ - IRQ 0 is interrupt 0x20
+ - IRQ 1 is interrupt 0x21
+ - etc...
+- By default, some IRQs are mapped to interrupts 8-15, whichis a problem because these are reserved in protected mode for exception,
+ - This requires us to remap the PIC (programmable interrupt controller)
+
+## Master vs slave
+- Two seperate controllers
+- Master controls IRQ 0-7
+- Slave controls IRQ 8-15
+
+## Pic Control Ports
+- 0x20 and 0x21 = master IRQs
+- 0xA0 and 0xA1 = slave IRQs
+
+## Requires interrupt acknowledgment
+- If an interrupt is not acknowledged, it will no longer work for that ISR
+

@@ -22,6 +22,20 @@ _start:
     or al, 2
     out 0x92, al
 
+    ; Remap master PIC https://pdos.csail.mit.edu/6.828/2010/readings/hardware/8259A.pdf
+    mov al, 00010001b ; level triggered mode, ICW4 (initinization command word) needed
+    out 0x20, al ; tell master pic
+
+    mov al, 0x20 ; Interrupt 0x20 is where master ISR should start
+    out 0x21, al
+
+    mov al, 00000001b ; ICW2, write new interrupt vector address
+    out 0x21, al
+    ; end remap master PIC
+
+    ; re enable interrupts
+    sti
+
     call kernel_start
     jmp $
 
