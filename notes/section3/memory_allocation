@@ -1,0 +1,87 @@
+# Understanding the heap
+## What is the heap
+- Giant memory region that can be shared in a controlled manner
+- Ask heap and tell it when you are done with it
+- Essentialy system memory managers
+
+## C programming language
+- Allows you to point to any address in memory, whether or not you can access it
+- If you point to an invalid address, the code will compile but crash when run
+
+## memory limnits for a 32 bit kernel
+- Can only access 32 bit memory addresses
+- Maximum of abouyt 4.29 gigs of memory
+
+## Memory of uninitialized system
+- video memry takes up ram
+- Hardware memory takes up portions of ram
+- Unused parts of ram are available for use
+- An array of uninitialized memory is available from address 0x01000000. This can be a lot or a little depending on how much ram is installed
+- NOTE: 0xC0000000 is reserved, meaning the array at 0x01000000 can give a max of 3.22 gigs
+
+## The heap
+- Gian memory region that is unused
+- Can be poiinted at 0x01000000
+- Will keep track of what has been alloocated and what hasnt
+- Will store information in kernel
+- Manages giant chunk of memory we call the heap
+
+## Simplest possible heap implementation
+- Start with a start address and call it a "current address", point it somewhere free i.e "0x01000000"
+- Any call to malloc get the current address and stores it in a temp variable called tmp
+- Current address is incrememted by size provided in malloc
+- Temp variable called tmp that copntains the allocated address is returned
+- Current address variable now contains the next address for malloc to return when malloc is called againE
+- PROS: Easy to implement
+- CONS: Memory can never be released which may eventually lead to system being usuasable ands requiring a reset
+
+## Our heap implementation
+- Consist of a table which describes a giant pioeve of free memory in the system
+- Will also descrube which memory is taken, which memory is free, and so one, will be called the entry table
+- Will have another pointer to a giant piece of free memory, This is what malloc will take memory from and will be called the data pool
+- Will be block based. Each address will be aligned to 4096 and will be at least 4096 bytes in size
+
+## Entry table
+- Comprised of 1 byte values that represent an entry in our heap data pool
+- Array size is calculated by taking our heap data pool size and dividing by 4096. This leaves the total number of array entries we can have 
+
+## Entry structure
+- 7 | HAS_N | IS_FIRST | 0 | 0 | ET_3 | ET_2 | ET_1 | ET_0 | 0
+- HAS_N - Set if the entry to the right of us is part of our allocation
+- IS_FIRST - Set of this if the first entry of our allocation
+- Upper 4 bits are flags, lower 4 bits are the entry type
+
+### Entry types
+- HEAP_BLOCK_TABLE_ENTRY_TAKEN - Entry is take and the address cannot be used
+- HEAP_BLOCK_TABLE_ENTRY_FREE - Entry is free and may be used
+
+## Data pool
+- Raw flat array of thousands or millions of bytes that our heap implementation can give to processes that need memeory
+
+## Malloc example
+- Assume we set heap data pool to point to 0x01000000
+- Assume heap is 100mb in size
+- Assume we have 25600 entries in our entry table
+
+### Process
+- We will be allocating 5000 bytes, this will be 2 blocks or 8192 bytes
+- Take the size from malloc and caluclate how many blocks we need to allocate for this size
+- Check the entry table for the first entry we can find that has type HEAP_BLOCK_TABLE_ENTRY_FREE
+- Since we require two blocks, we need to make sure we need to make sure the next block is also free
+- If the next block is not free, keep looking until we find two free blocks that are next to eachother
+- When we have those two blocks, we mark those as taken
+- We return the absolute address that the starting block represents. Calculation: (heap_data_pool_start_address + (block_number * block_size)) or 0x01000000 + (2 * 4096)
+
+## Free Example
+- Calculate the block number bnased on the address provided to us to free
+- Go through the entry table starting at the blcok numbewr we allocated and set each entry to 0x00 until we reach the last block of the allocation
+- We know how many blocks we need to free because the current block we are freeing will not have the HAS_N bit set in the entry byte
+
+## Advanteages of our implementation
+- Fast to allocate blocks of memory
+- Fast to free blocks of memory
+- Can be written in under 200 lines of code
+
+## Disadvantages of our implementation
+- We allocate in memory blocks meaning misaligned size requested from our heap will result in wasted space
+- Memory fragmentation is possible
