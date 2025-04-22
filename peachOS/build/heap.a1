@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<analyzerinfo hash="10232207388450540709">
+        <error id="constParameterPointer" severity="style" msg="Parameter &apos;heap&apos; can be declared as pointer to const" verbose="Parameter &apos;heap&apos; can be declared as pointer to const" cwe="398" file0="/home/suse/Documents/udemy-kernel/peachOS/src/memory/heap/heap.c">
+            <location file="/home/suse/Documents/udemy-kernel/peachOS/src/memory/heap/heap.c" line="4" column="30" info="Parameter &apos;heap&apos; can be declared as pointer to const"/>
+            <symbol>heap</symbol>
+        </error>
+        <error id="constParameterPointer" severity="style" msg="Parameter &apos;ptr&apos; can be declared as pointer to const" verbose="Parameter &apos;ptr&apos; can be declared as pointer to const" cwe="398" file0="/home/suse/Documents/udemy-kernel/peachOS/src/memory/heap/heap.c">
+            <location file="/home/suse/Documents/udemy-kernel/peachOS/src/memory/heap/heap.c" line="4" column="42" info="Parameter &apos;ptr&apos; can be declared as pointer to const"/>
+            <symbol>ptr</symbol>
+        </error>
+        <error id="constParameterPointer" severity="style" msg="Parameter &apos;end&apos; can be declared as pointer to const" verbose="Parameter &apos;end&apos; can be declared as pointer to const" cwe="398" file0="/home/suse/Documents/udemy-kernel/peachOS/src/memory/heap/heap.c">
+            <location file="/home/suse/Documents/udemy-kernel/peachOS/src/memory/heap/heap.c" line="4" column="53" info="Parameter &apos;end&apos; can be declared as pointer to const"/>
+            <symbol>end</symbol>
+        </error>
+        <error id="constParameterPointer" severity="style" msg="Parameter &apos;table&apos; can be declared as pointer to const" verbose="Parameter &apos;table&apos; can be declared as pointer to const" cwe="398" file0="/home/suse/Documents/udemy-kernel/peachOS/src/memory/heap/heap.c">
+            <location file="/home/suse/Documents/udemy-kernel/peachOS/src/memory/heap/heap.c" line="4" column="77" info="Parameter &apos;table&apos; can be declared as pointer to const"/>
+            <symbol>table</symbol>
+        </error>
+</analyzerinfo>
