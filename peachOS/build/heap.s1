@@ -1,1 +1,2 @@
-heap_create
+heap_validate_alignment call:[return]
+heap_create call:[heap_validate_alignment]
