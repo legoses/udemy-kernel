@@ -1,2 +1,6 @@
+heap_validate_table
 heap_validate_alignment call:[return]
-heap_create call:[heap_validate_alignment]
+heap_create call:[heap_validate_alignment,heap_validate_table,memset,sizeof]
+heap_align_value_to_upper
+heap_malloc
+heap_free
