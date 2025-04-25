@@ -58,15 +58,36 @@ static uint32_t heap_align_value_to_upper(uint32_t val) {
 
     val = (val - (val % PEACHOS_HEAP_BLOCK_SIZE)); // align thair value with the lower block aligned size
     val += PEACHOS_HEAP_BLOCK_SIZE; // add 4096 to val
-    reutrn val;
+    return val;
 }
 
 
-void *heap_malloc(size_t size) {
-    return 0;
+void *heap_malloc_blocks(struct heap *heap, uint32_t total_blocks) {
+    void *address = 0;
+
+    int start_block = heap_get_start_block(heap, total_blocks); // get the start block of memory being allocated
+    
+    if(start_block < 0) {
+        goto out;
+    }
+
+    address = heap_block_to_address(heap, start_block); // calculate abolsute address of beginnig block
+
+    // mark block as taken
+    heap_mark_blocks_taken(heap, start_block, total_blocks);
+
+out:
+    return address;
 }
 
 
-void heap_free(void *ptr) {
+void *heap_malloc(struct heap *heap, size_t size) {
+    size_t aligned_size = heap_align_value_to_upper(size); // calculate size to allocate
+    uint32_t total_blocks = aligned_size / PEACHOS_HEAP_BLOCK_SIZE; //calculate how many blocks to allocate
+    return heap_malloc_blocks(heap, total_blocks);
+}
+
+
+void heap_free(struct heap *heap, void *ptr) {
     return 0;
 }

@@ -1,15 +1,14 @@
 <?xml version="1.0"?>
-<analyzerinfo hash="10066666233279947194">
-        <error id="uselessAssignmentArg" severity="style" msg="Assignment of function parameter has no effect outside the function." verbose="Assignment of function parameter has no effect outside the function." cwe="398" file0="/home/suse/Documents/udemy-kernel/peachOS/src/memory/heap/heap.c">
-            <location file="/home/suse/Documents/udemy-kernel/peachOS/src/memory/heap/heap.c" line="60" column="5"/>
+<analyzerinfo hash="9468846716643154418">
+        <error id="funcArgOrderDifferent" severity="warning" msg="Function &apos;heap_malloc&apos; argument order different: declaration &apos;size, &apos; definition &apos;heap, size&apos;" verbose="Function &apos;heap_malloc&apos; argument order different: declaration &apos;size, &apos; definition &apos;heap, size&apos;" cwe="683" file0="/home/suse/Documents/udemy-kernel/peachOS/src/memory/heap/heap.c">
+            <location file="/home/suse/Documents/udemy-kernel/peachOS/src/memory/heap/heap.c" line="84" column="32"/>
+            <location file="/home/suse/Documents/udemy-kernel/peachOS/src/memory/heap/heap.h" line="27" column="26"/>
+            <symbol>heap_malloc</symbol>
         </error>
-        <error id="missingReturn" severity="error" msg="Found an exit path from function with non-void return type that has missing return statement" verbose="Found an exit path from function with non-void return type that has missing return statement" cwe="758" file0="/home/suse/Documents/udemy-kernel/peachOS/src/memory/heap/heap.c">
-            <location file="/home/suse/Documents/udemy-kernel/peachOS/src/memory/heap/heap.c" line="57" column="5"/>
-        </error>
-        <error id="shadowArgument" severity="style" msg="Local variable &apos;val&apos; shadows outer argument" verbose="Local variable &apos;val&apos; shadows outer argument" cwe="398" file0="/home/suse/Documents/udemy-kernel/peachOS/src/memory/heap/heap.c">
-            <location file="/home/suse/Documents/udemy-kernel/peachOS/src/memory/heap/heap.c" line="61" column="12" info="Shadow variable"/>
-            <location file="/home/suse/Documents/udemy-kernel/peachOS/src/memory/heap/heap.c" line="54" column="52" info="Shadowed declaration"/>
-            <symbol>val</symbol>
+        <error id="funcArgOrderDifferent" severity="warning" msg="Function &apos;heap_free&apos; argument order different: declaration &apos;ptr, &apos; definition &apos;heap, ptr&apos;" verbose="Function &apos;heap_free&apos; argument order different: declaration &apos;ptr, &apos; definition &apos;heap, ptr&apos;" cwe="683" file0="/home/suse/Documents/udemy-kernel/peachOS/src/memory/heap/heap.c">
+            <location file="/home/suse/Documents/udemy-kernel/peachOS/src/memory/heap/heap.c" line="91" column="29"/>
+            <location file="/home/suse/Documents/udemy-kernel/peachOS/src/memory/heap/heap.h" line="28" column="22"/>
+            <symbol>heap_free</symbol>
         </error>
         <error id="constParameterPointer" severity="style" msg="Parameter &apos;ptr&apos; can be declared as pointer to const" verbose="Parameter &apos;ptr&apos; can be declared as pointer to const" cwe="398" file0="/home/suse/Documents/udemy-kernel/peachOS/src/memory/heap/heap.c">
             <location file="/home/suse/Documents/udemy-kernel/peachOS/src/memory/heap/heap.c" line="7" column="38" info="Parameter &apos;ptr&apos; can be declared as pointer to const"/>
@@ -23,25 +22,18 @@
             <location file="/home/suse/Documents/udemy-kernel/peachOS/src/memory/heap/heap.c" line="7" column="73" info="Parameter &apos;table&apos; can be declared as pointer to const"/>
             <symbol>table</symbol>
         </error>
+        <error id="constParameterPointer" severity="style" msg="Parameter &apos;heap&apos; can be declared as pointer to const" verbose="Parameter &apos;heap&apos; can be declared as pointer to const" cwe="398" file0="/home/suse/Documents/udemy-kernel/peachOS/src/memory/heap/heap.c">
+            <location file="/home/suse/Documents/udemy-kernel/peachOS/src/memory/heap/heap.c" line="91" column="29" info="Parameter &apos;heap&apos; can be declared as pointer to const"/>
+            <symbol>heap</symbol>
+        </error>
         <error id="constParameterPointer" severity="style" msg="Parameter &apos;ptr&apos; can be declared as pointer to const" verbose="Parameter &apos;ptr&apos; can be declared as pointer to const" cwe="398" file0="/home/suse/Documents/udemy-kernel/peachOS/src/memory/heap/heap.c">
-            <location file="/home/suse/Documents/udemy-kernel/peachOS/src/memory/heap/heap.c" line="70" column="22" info="Parameter &apos;ptr&apos; can be declared as pointer to const"/>
+            <location file="/home/suse/Documents/udemy-kernel/peachOS/src/memory/heap/heap.c" line="91" column="41" info="Parameter &apos;ptr&apos; can be declared as pointer to const"/>
             <symbol>ptr</symbol>
-        </error>
-        <error id="unreadVariable" severity="style" msg="Variable &apos;val&apos; is assigned a value that is never used." verbose="Variable &apos;val&apos; is assigned a value that is never used." cwe="563" file0="/home/suse/Documents/udemy-kernel/peachOS/src/memory/heap/heap.c">
-            <location file="/home/suse/Documents/udemy-kernel/peachOS/src/memory/heap/heap.c" line="59" column="9"/>
-            <symbol>val</symbol>
-        </error>
-        <error id="unreadVariable" severity="style" msg="Variable &apos;val&apos; is assigned a value that is never used." verbose="Variable &apos;val&apos; is assigned a value that is never used." cwe="563" file0="/home/suse/Documents/udemy-kernel/peachOS/src/memory/heap/heap.c">
-            <location file="/home/suse/Documents/udemy-kernel/peachOS/src/memory/heap/heap.c" line="60" column="9"/>
-            <symbol>val</symbol>
-        </error>
-        <error id="unusedVariable" severity="style" msg="Unused variable: val" verbose="Unused variable: val" cwe="563" file0="/home/suse/Documents/udemy-kernel/peachOS/src/memory/heap/heap.c">
-            <location file="/home/suse/Documents/udemy-kernel/peachOS/src/memory/heap/heap.c" line="61" column="12"/>
-            <symbol>val</symbol>
         </error>
   <FileInfo check="ctu">
 <function-call call-id="/home/suse/Documents/udemy-kernel/peachOS/src/memory/heap/heap.c:23:13" call-funcname="heap_validate_alignment" call-argnr="1" file="/home/suse/Documents/udemy-kernel/peachOS/src/memory/heap/heap.c" line="31" col="9" my-id="/home/suse/Documents/udemy-kernel/peachOS/src/memory/heap/heap.h:26:5" my-argnr="2"/>
 <function-call call-id="/home/suse/Documents/udemy-kernel/peachOS/src/memory/heap/heap.c:23:13" call-funcname="heap_validate_alignment" call-argnr="1" file="/home/suse/Documents/udemy-kernel/peachOS/src/memory/heap/heap.c" line="31" col="42" my-id="/home/suse/Documents/udemy-kernel/peachOS/src/memory/heap/heap.h:26:5" my-argnr="3"/>
+<function-call call-id="/home/suse/Documents/udemy-kernel/peachOS/src/memory/heap/heap.c:65:7" call-funcname="heap_malloc_blocks" call-argnr="1" file="/home/suse/Documents/udemy-kernel/peachOS/src/memory/heap/heap.c" line="87" col="12" my-id="/home/suse/Documents/udemy-kernel/peachOS/src/memory/heap/heap.h:27:7" my-argnr="1"/>
   </FileInfo>
   <FileInfo check="Null pointer">
     <unsafe-usage my-id="/home/suse/Documents/udemy-kernel/peachOS/src/memory/heap/heap.c:7:12" my-argnr="3" my-argname="table" file="/home/suse/Documents/udemy-kernel/peachOS/src/memory/heap/heap.c" line="13" col="8" value="0"/>
