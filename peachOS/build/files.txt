@@ -1,1 +1,1 @@
-heap.a1::/home/suse/udemy-kernel/peachOS/src/memory/heap/heap.c
+idt.a1::/home/suse/udemy-kernel/peachOS/src/idt/idt.h

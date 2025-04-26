@@ -1,1 +1,0 @@
-kheap_init global:[kernel_heap,kernel_heap_table] call:[heap_create,print] noreturn:[print]

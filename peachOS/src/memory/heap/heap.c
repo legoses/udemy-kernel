@@ -150,5 +150,25 @@ void *heap_malloc(struct heap *heap, size_t size) {
 }
 
 
+int heap_address_to_block(struct heap *heap, void *address) {
+    return ((int)(address - heap->saddr)) / PEACHOS_HEAP_BLOCK_SIZE; // convert from memroy address to table block number
+}
+
+
+void heap_mark_blocks_free(struct heap *heap, int starting_block) {
+    struct heap_table *table = heap->table;
+    for(int i = starting_block; i < (int)table->total; i++) {
+        HEAP_BLOCK_TABLE_ENTRY entry = table->entries[i];
+        table->entries[i] = HEAP_BLOCK_TABLE_ENTRY_FREE; // free memory to it can be reused by malloc
+        
+        if(!(entry & HEAP_BLOCK_HAS_NEXT)) {
+            break;
+        }
+        
+    }
+}
+
+
 void heap_free(struct heap *heap, void *ptr) {
+    heap_mark_blocks_free(heap, heap_address_to_block(heap, ptr)); // maybe add bounds check to make sure ptr is valid later
 }

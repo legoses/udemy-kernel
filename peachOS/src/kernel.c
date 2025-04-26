@@ -3,6 +3,7 @@
 #include <stddef.h>
 #include "idt/idt.h"
 #include "io/io.h"
+#include "memory/heap/kheap.h"
 
 
 uint16_t *video_mem = 0;
@@ -85,5 +86,9 @@ void kernel_start() {
     // video_mem[0] = 0x0341; color and ascii code appear reversed because of endianess
     terminal_initialize();
     print("Hello, world!\ntest");
+
+    // initialize heap
+    kheap_init();
+
     idt_init(); // initialize interrupt descriptor table
 }
