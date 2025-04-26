@@ -1,46 +1,56 @@
 <?xml version="1.0"?>
-<analyzerinfo hash="9468846716643154418">
-        <error id="funcArgOrderDifferent" severity="warning" msg="Function &apos;heap_malloc&apos; argument order different: declaration &apos;size, &apos; definition &apos;heap, size&apos;" verbose="Function &apos;heap_malloc&apos; argument order different: declaration &apos;size, &apos; definition &apos;heap, size&apos;" cwe="683" file0="/home/suse/Documents/udemy-kernel/peachOS/src/memory/heap/heap.c">
-            <location file="/home/suse/Documents/udemy-kernel/peachOS/src/memory/heap/heap.c" line="84" column="32"/>
-            <location file="/home/suse/Documents/udemy-kernel/peachOS/src/memory/heap/heap.h" line="27" column="26"/>
-            <symbol>heap_malloc</symbol>
+<analyzerinfo hash="5549355715965860253">
+        <error id="normalCheckLevelMaxBranches" severity="information" msg="Limiting analysis of branches. Use --check-level=exhaustive to analyze all branches." verbose="Limiting analysis of branches. Use --check-level=exhaustive to analyze all branches." file0="/home/suse/udemy-kernel/peachOS/src/memory/heap/heap.c">
+            <location file="/home/suse/udemy-kernel/peachOS/src/memory/heap/heap.c" line="0" column="0"/>
         </error>
-        <error id="funcArgOrderDifferent" severity="warning" msg="Function &apos;heap_free&apos; argument order different: declaration &apos;ptr, &apos; definition &apos;heap, ptr&apos;" verbose="Function &apos;heap_free&apos; argument order different: declaration &apos;ptr, &apos; definition &apos;heap, ptr&apos;" cwe="683" file0="/home/suse/Documents/udemy-kernel/peachOS/src/memory/heap/heap.c">
-            <location file="/home/suse/Documents/udemy-kernel/peachOS/src/memory/heap/heap.c" line="91" column="29"/>
-            <location file="/home/suse/Documents/udemy-kernel/peachOS/src/memory/heap/heap.h" line="28" column="22"/>
-            <symbol>heap_free</symbol>
-        </error>
-        <error id="constParameterPointer" severity="style" msg="Parameter &apos;ptr&apos; can be declared as pointer to const" verbose="Parameter &apos;ptr&apos; can be declared as pointer to const" cwe="398" file0="/home/suse/Documents/udemy-kernel/peachOS/src/memory/heap/heap.c">
-            <location file="/home/suse/Documents/udemy-kernel/peachOS/src/memory/heap/heap.c" line="7" column="38" info="Parameter &apos;ptr&apos; can be declared as pointer to const"/>
+        <error id="constParameterPointer" severity="style" msg="Parameter &apos;ptr&apos; can be declared as pointer to const" verbose="Parameter &apos;ptr&apos; can be declared as pointer to const" cwe="398" file0="/home/suse/udemy-kernel/peachOS/src/memory/heap/heap.c">
+            <location file="/home/suse/udemy-kernel/peachOS/src/memory/heap/heap.c" line="7" column="38" info="Parameter &apos;ptr&apos; can be declared as pointer to const"/>
             <symbol>ptr</symbol>
         </error>
-        <error id="constParameterPointer" severity="style" msg="Parameter &apos;end&apos; can be declared as pointer to const" verbose="Parameter &apos;end&apos; can be declared as pointer to const" cwe="398" file0="/home/suse/Documents/udemy-kernel/peachOS/src/memory/heap/heap.c">
-            <location file="/home/suse/Documents/udemy-kernel/peachOS/src/memory/heap/heap.c" line="7" column="49" info="Parameter &apos;end&apos; can be declared as pointer to const"/>
+        <error id="constParameterPointer" severity="style" msg="Parameter &apos;end&apos; can be declared as pointer to const" verbose="Parameter &apos;end&apos; can be declared as pointer to const" cwe="398" file0="/home/suse/udemy-kernel/peachOS/src/memory/heap/heap.c">
+            <location file="/home/suse/udemy-kernel/peachOS/src/memory/heap/heap.c" line="7" column="49" info="Parameter &apos;end&apos; can be declared as pointer to const"/>
             <symbol>end</symbol>
         </error>
-        <error id="constParameterPointer" severity="style" msg="Parameter &apos;table&apos; can be declared as pointer to const" verbose="Parameter &apos;table&apos; can be declared as pointer to const" cwe="398" file0="/home/suse/Documents/udemy-kernel/peachOS/src/memory/heap/heap.c">
-            <location file="/home/suse/Documents/udemy-kernel/peachOS/src/memory/heap/heap.c" line="7" column="73" info="Parameter &apos;table&apos; can be declared as pointer to const"/>
+        <error id="constParameterPointer" severity="style" msg="Parameter &apos;table&apos; can be declared as pointer to const" verbose="Parameter &apos;table&apos; can be declared as pointer to const" cwe="398" file0="/home/suse/udemy-kernel/peachOS/src/memory/heap/heap.c">
+            <location file="/home/suse/udemy-kernel/peachOS/src/memory/heap/heap.c" line="7" column="73" info="Parameter &apos;table&apos; can be declared as pointer to const"/>
             <symbol>table</symbol>
         </error>
-        <error id="constParameterPointer" severity="style" msg="Parameter &apos;heap&apos; can be declared as pointer to const" verbose="Parameter &apos;heap&apos; can be declared as pointer to const" cwe="398" file0="/home/suse/Documents/udemy-kernel/peachOS/src/memory/heap/heap.c">
-            <location file="/home/suse/Documents/udemy-kernel/peachOS/src/memory/heap/heap.c" line="91" column="29" info="Parameter &apos;heap&apos; can be declared as pointer to const"/>
+        <error id="constVariablePointer" severity="style" msg="Variable &apos;table&apos; can be declared as pointer to const" verbose="Variable &apos;table&apos; can be declared as pointer to const" cwe="398" file0="/home/suse/udemy-kernel/peachOS/src/memory/heap/heap.c">
+            <location file="/home/suse/udemy-kernel/peachOS/src/memory/heap/heap.c" line="72" column="24" info="Variable &apos;table&apos; can be declared as pointer to const"/>
+            <symbol>table</symbol>
+        </error>
+        <error id="constParameterPointer" severity="style" msg="Parameter &apos;heap&apos; can be declared as pointer to const" verbose="Parameter &apos;heap&apos; can be declared as pointer to const" cwe="398" file0="/home/suse/udemy-kernel/peachOS/src/memory/heap/heap.c">
+            <location file="/home/suse/udemy-kernel/peachOS/src/memory/heap/heap.c" line="103" column="42" info="Parameter &apos;heap&apos; can be declared as pointer to const"/>
             <symbol>heap</symbol>
         </error>
-        <error id="constParameterPointer" severity="style" msg="Parameter &apos;ptr&apos; can be declared as pointer to const" verbose="Parameter &apos;ptr&apos; can be declared as pointer to const" cwe="398" file0="/home/suse/Documents/udemy-kernel/peachOS/src/memory/heap/heap.c">
-            <location file="/home/suse/Documents/udemy-kernel/peachOS/src/memory/heap/heap.c" line="91" column="41" info="Parameter &apos;ptr&apos; can be declared as pointer to const"/>
+        <error id="constParameterPointer" severity="style" msg="Parameter &apos;heap&apos; can be declared as pointer to const" verbose="Parameter &apos;heap&apos; can be declared as pointer to const" cwe="398" file0="/home/suse/udemy-kernel/peachOS/src/memory/heap/heap.c">
+            <location file="/home/suse/udemy-kernel/peachOS/src/memory/heap/heap.c" line="153" column="29" info="Parameter &apos;heap&apos; can be declared as pointer to const"/>
+            <symbol>heap</symbol>
+        </error>
+        <error id="constParameterPointer" severity="style" msg="Parameter &apos;ptr&apos; can be declared as pointer to const" verbose="Parameter &apos;ptr&apos; can be declared as pointer to const" cwe="398" file0="/home/suse/udemy-kernel/peachOS/src/memory/heap/heap.c">
+            <location file="/home/suse/udemy-kernel/peachOS/src/memory/heap/heap.c" line="153" column="41" info="Parameter &apos;ptr&apos; can be declared as pointer to const"/>
             <symbol>ptr</symbol>
         </error>
+        <error id="arithOperationsOnVoidPointer" severity="portability" msg="&apos;heap-&gt;saddr&apos; is of type &apos;void *&apos;. When using void pointers in calculations, the behaviour is undefined." verbose="&apos;heap-&gt;saddr&apos; is of type &apos;void *&apos;. When using void pointers in calculations, the behaviour is undefined. Arithmetic operations on &apos;void *&apos; is a GNU C extension, which defines the &apos;sizeof(void)&apos; to be 1." cwe="467" file0="/home/suse/udemy-kernel/peachOS/src/memory/heap/heap.c">
+            <location file="/home/suse/udemy-kernel/peachOS/src/memory/heap/heap.c" line="104" column="24"/>
+            <symbol>heap-&gt;saddr</symbol>
+        </error>
   <FileInfo check="ctu">
-<function-call call-id="/home/suse/Documents/udemy-kernel/peachOS/src/memory/heap/heap.c:23:13" call-funcname="heap_validate_alignment" call-argnr="1" file="/home/suse/Documents/udemy-kernel/peachOS/src/memory/heap/heap.c" line="31" col="9" my-id="/home/suse/Documents/udemy-kernel/peachOS/src/memory/heap/heap.h:26:5" my-argnr="2"/>
-<function-call call-id="/home/suse/Documents/udemy-kernel/peachOS/src/memory/heap/heap.c:23:13" call-funcname="heap_validate_alignment" call-argnr="1" file="/home/suse/Documents/udemy-kernel/peachOS/src/memory/heap/heap.c" line="31" col="42" my-id="/home/suse/Documents/udemy-kernel/peachOS/src/memory/heap/heap.h:26:5" my-argnr="3"/>
-<function-call call-id="/home/suse/Documents/udemy-kernel/peachOS/src/memory/heap/heap.c:65:7" call-funcname="heap_malloc_blocks" call-argnr="1" file="/home/suse/Documents/udemy-kernel/peachOS/src/memory/heap/heap.c" line="87" col="12" my-id="/home/suse/Documents/udemy-kernel/peachOS/src/memory/heap/heap.h:27:7" my-argnr="1"/>
+<function-call call-id="/home/suse/udemy-kernel/peachOS/src/memory/heap/heap.c:23:13" call-funcname="heap_validate_alignment" call-argnr="1" file="/home/suse/udemy-kernel/peachOS/src/memory/heap/heap.c" line="31" col="9" my-id="/home/suse/udemy-kernel/peachOS/src/memory/heap/heap.h:26:5" my-argnr="2"/>
+<function-call call-id="/home/suse/udemy-kernel/peachOS/src/memory/heap/heap.c:23:13" call-funcname="heap_validate_alignment" call-argnr="1" file="/home/suse/udemy-kernel/peachOS/src/memory/heap/heap.c" line="31" col="42" my-id="/home/suse/udemy-kernel/peachOS/src/memory/heap/heap.h:26:5" my-argnr="3"/>
+<function-call call-id="/home/suse/udemy-kernel/peachOS/src/memory/heap/heap.c:71:5" call-funcname="heap_get_start_block" call-argnr="1" file="/home/suse/udemy-kernel/peachOS/src/memory/heap/heap.c" line="130" col="23" my-id="/home/suse/udemy-kernel/peachOS/src/memory/heap/heap.c:127:7" my-argnr="1"/>
+<function-call call-id="/home/suse/udemy-kernel/peachOS/src/memory/heap/heap.c:127:7" call-funcname="heap_malloc_blocks" call-argnr="1" file="/home/suse/udemy-kernel/peachOS/src/memory/heap/heap.c" line="149" col="12" my-id="/home/suse/udemy-kernel/peachOS/src/memory/heap/heap.h:27:7" my-argnr="1"/>
   </FileInfo>
   <FileInfo check="Null pointer">
-    <unsafe-usage my-id="/home/suse/Documents/udemy-kernel/peachOS/src/memory/heap/heap.c:7:12" my-argnr="3" my-argname="table" file="/home/suse/Documents/udemy-kernel/peachOS/src/memory/heap/heap.c" line="13" col="8" value="0"/>
-    <unsafe-usage my-id="/home/suse/Documents/udemy-kernel/peachOS/src/memory/heap/heap.h:26:5" my-argnr="1" my-argname="heap" file="/home/suse/Documents/udemy-kernel/peachOS/src/memory/heap/heap.c" line="36" col="12" value="0"/>
+    <unsafe-usage my-id="/home/suse/udemy-kernel/peachOS/src/memory/heap/heap.c:7:12" my-argnr="3" my-argname="table" file="/home/suse/udemy-kernel/peachOS/src/memory/heap/heap.c" line="13" col="8" value="0"/>
+    <unsafe-usage my-id="/home/suse/udemy-kernel/peachOS/src/memory/heap/heap.h:26:5" my-argnr="1" my-argname="heap" file="/home/suse/udemy-kernel/peachOS/src/memory/heap/heap.c" line="36" col="12" value="0"/>
+    <unsafe-usage my-id="/home/suse/udemy-kernel/peachOS/src/memory/heap/heap.c:71:5" my-argnr="1" my-argname="heap" file="/home/suse/udemy-kernel/peachOS/src/memory/heap/heap.c" line="72" col="32" value="0"/>
+    <unsafe-usage my-id="/home/suse/udemy-kernel/peachOS/src/memory/heap/heap.c:103:7" my-argnr="1" my-argname="heap" file="/home/suse/udemy-kernel/peachOS/src/memory/heap/heap.c" line="104" col="12" value="0"/>
   </FileInfo>
   <FileInfo check="Uninitialized variables">
-    <unsafe-usage my-id="/home/suse/Documents/udemy-kernel/peachOS/src/memory/heap/heap.c:7:12" my-argnr="3" my-argname="table" file="/home/suse/Documents/udemy-kernel/peachOS/src/memory/heap/heap.c" line="13" col="8" value="0"/>
-    <unsafe-usage my-id="/home/suse/Documents/udemy-kernel/peachOS/src/memory/heap/heap.c:23:13" my-argnr="1" my-argname="ptr" file="/home/suse/Documents/udemy-kernel/peachOS/src/memory/heap/heap.c" line="24" col="28" value="0"/>
+    <unsafe-usage my-id="/home/suse/udemy-kernel/peachOS/src/memory/heap/heap.c:7:12" my-argnr="3" my-argname="table" file="/home/suse/udemy-kernel/peachOS/src/memory/heap/heap.c" line="13" col="8" value="0"/>
+    <unsafe-usage my-id="/home/suse/udemy-kernel/peachOS/src/memory/heap/heap.c:23:13" my-argnr="1" my-argname="ptr" file="/home/suse/udemy-kernel/peachOS/src/memory/heap/heap.c" line="24" col="28" value="0"/>
+    <unsafe-usage my-id="/home/suse/udemy-kernel/peachOS/src/memory/heap/heap.c:71:5" my-argnr="1" my-argname="heap" file="/home/suse/udemy-kernel/peachOS/src/memory/heap/heap.c" line="72" col="32" value="0"/>
+    <unsafe-usage my-id="/home/suse/udemy-kernel/peachOS/src/memory/heap/heap.c:103:7" my-argnr="1" my-argname="heap" file="/home/suse/udemy-kernel/peachOS/src/memory/heap/heap.c" line="104" col="12" value="0"/>
   </FileInfo>
 </analyzerinfo>

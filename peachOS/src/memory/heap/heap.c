@@ -62,6 +62,68 @@ static uint32_t heap_align_value_to_upper(uint32_t val) {
 }
 
 
+// HEAP_BLOCK_TABLE_ENTRY is just a typecasted unsigned char
+static int heap_get_entry_type(HEAP_BLOCK_TABLE_ENTRY entry) {
+    return entry & 0b11110000; // get lower 4 bits to determine memory block type
+}
+
+
+int heap_get_start_block(struct heap *heap, uint32_t total_blocks) {
+    struct heap_table *table = heap->table;
+    int bc = 0; // store current block
+    int bs = -1; // store first block we find that is free
+
+    // loop through entire table to find free blocks
+    for(size_t i = 0; i < table->total; i++) {
+        if(heap_get_entry_type(table->entries[i]) != HEAP_BLOCK_TABLE_ENTRY_FREE) { // if non free block is found, restart bs and bc
+            bc = 0; bs = -1;
+            continue; // go back to start of loop
+        }
+
+        if(bs == -1) {
+            bs = i; // get start block
+        }
+
+        bc++;
+
+        if(bc == total_blocks) {
+            break;
+        }
+    }
+
+    if(bs == -1) {
+        return -ENOMEM; // if bs is still -1, reutrn no memory error
+    }
+
+    return bs; // return starting block number
+
+}
+
+
+void *heap_block_to_address(struct heap *heap, int block) {
+    return heap->saddr + (block * PEACHOS_HEAP_BLOCK_SIZE); // calculate offset from heap start. start + (offset * block_size)
+}
+
+
+void heap_mark_blocks_taken(struct heap *heap, int start_block, int total_blocks) {
+    int end_block = (start_block + total_blocks) - 1;
+
+    HEAP_BLOCK_TABLE_ENTRY entry = HEAP_BLOCK_TABLE_ENTRY_TAKEN | HEAP_BLOCK_IS_FIRST;
+    if(total_blocks > 1) {
+        entry |= HEAP_BLOCK_HAS_NEXT; // indicate this is not the last block
+    }
+
+    for(int i = start_block; i <= end_block; i++) { // loop through every block being allocated
+        heap->table->entries[i] = entry; // if first entry, this will have HEAP_BLOCK_IS_FIRST flag set
+        entry = HEAP_BLOCK_TABLE_ENTRY_TAKEN; // remove first entry flag
+
+        if(i != end_block - 1) {
+            entry |= HEAP_BLOCK_HAS_NEXT; // set next block flag if not last block
+        }
+    }
+}
+
+
 void *heap_malloc_blocks(struct heap *heap, uint32_t total_blocks) {
     void *address = 0;
 
@@ -89,5 +151,4 @@ void *heap_malloc(struct heap *heap, size_t size) {
 
 
 void heap_free(struct heap *heap, void *ptr) {
-    return 0;
 }
