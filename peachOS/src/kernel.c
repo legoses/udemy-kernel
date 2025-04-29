@@ -91,4 +91,7 @@ void kernel_start() {
     kheap_init();
 
     idt_init(); // initialize interrupt descriptor table
+    
+    // enable system interripts after idt table is defined, so system does not panic if exception occurs, and instead property calls interrupt
+    enable_interrupts();
 }

@@ -33,8 +33,6 @@ _start:
     out 0x21, al
     ; end remap master PIC
 
-    ; re enable interrupts
-    sti
 
     call kernel_start
     jmp $

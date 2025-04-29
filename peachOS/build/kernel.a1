@@ -1,3 +1,19 @@
 <?xml version="1.0"?>
-<analyzerinfo hash="10724237306187324704">
+<analyzerinfo hash="14927109623899289250">
+  <FileInfo check="ctu">
+<function-call call-id="/home/suse/Documents/udemy-kernel/peachOS/src/kernel.c:15:10" call-funcname="terminal_make_char" call-argnr="2" file="/home/suse/Documents/udemy-kernel/peachOS/src/kernel.c" line="24" col="56" call-argexpr="color" call-argvaluetype="0" call-argvalue="0" call-argvalue-ufr="0">
+  <path file="/home/suse/Documents/udemy-kernel/peachOS/src/kernel.c" line="55" col="41" info="Calling function &apos;terminal_putchar&apos;, 4th argument &apos;0&apos; value is 0"/>
+</function-call><function-call call-id="/home/suse/Documents/udemy-kernel/peachOS/src/kernel.c:23:6" call-funcname="terminal_putchar" call-argnr="1" file="/home/suse/Documents/udemy-kernel/peachOS/src/kernel.c" line="55" col="29" call-argexpr="x" call-argvaluetype="0" call-argvalue="0" call-argvalue-ufr="0">
+  <path file="/home/suse/Documents/udemy-kernel/peachOS/src/kernel.c" line="53" col="21" info="Assignment &apos;x=0&apos;, assigned value is 0"/>
+</function-call><function-call call-id="/home/suse/Documents/udemy-kernel/peachOS/src/kernel.c:23:6" call-funcname="terminal_putchar" call-argnr="2" file="/home/suse/Documents/udemy-kernel/peachOS/src/kernel.c" line="55" col="29" call-argexpr="y" call-argvaluetype="0" call-argvalue="0" call-argvalue-ufr="0">
+  <path file="/home/suse/Documents/udemy-kernel/peachOS/src/kernel.c" line="52" col="17" info="Assignment &apos;y=0&apos;, assigned value is 0"/>
+</function-call><function-call call-id="/home/suse/Documents/udemy-kernel/peachOS/src/kernel.c:23:6" call-funcname="terminal_putchar" call-argnr="4" file="/home/suse/Documents/udemy-kernel/peachOS/src/kernel.c" line="55" col="29" call-argexpr="0" call-argvaluetype="0" call-argvalue="0" call-argvalue-ufr="0"/><function-call call-id="/home/suse/Documents/udemy-kernel/peachOS/src/kernel.c:62:8" call-funcname="strlen" call-argnr="1" file="/home/suse/Documents/udemy-kernel/peachOS/src/kernel.c" line="75" col="18" my-id="/home/suse/Documents/udemy-kernel/peachOS/src/kernel.h:9:6" my-argnr="1"/>
+  </FileInfo>
+  <FileInfo check="Null pointer">
+    <unsafe-usage my-id="/home/suse/Documents/udemy-kernel/peachOS/src/kernel.c:62:8" my-argnr="1" my-argname="str" file="/home/suse/Documents/udemy-kernel/peachOS/src/kernel.c" line="65" col="11" value="0"/>
+    <unsafe-usage my-id="/home/suse/Documents/udemy-kernel/peachOS/src/kernel.h:9:6" my-argnr="1" my-argname="str" file="/home/suse/Documents/udemy-kernel/peachOS/src/kernel.c" line="75" col="25" value="0"/>
+  </FileInfo>
+  <FileInfo check="Uninitialized variables">
+    <unsafe-usage my-id="/home/suse/Documents/udemy-kernel/peachOS/src/kernel.c:62:8" my-argnr="1" my-argname="str" file="/home/suse/Documents/udemy-kernel/peachOS/src/kernel.c" line="65" col="11" value="0"/>
+  </FileInfo>
 </analyzerinfo>
