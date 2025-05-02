@@ -1,1 +1,1 @@
-idt.a1::/home/suse/Documents/udemy-kernel/peachOS/src/idt/idt.h
+paging.a1::/home/suse/Documents/udemy-kernel/peachOS/src/memory/paging/paging.c

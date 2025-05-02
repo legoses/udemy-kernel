@@ -1,0 +1,1 @@
+paging_new_4gb call:[kzalloc,sizeof] noreturn:[kzalloc]
