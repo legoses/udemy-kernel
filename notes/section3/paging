@@ -1,0 +1,66 @@
+# Paging
+- Allows us to rmap memory address to point to other memory addresses
+- Can be used to provide the illusion that we have the maximum amount of ram installed
+- Can be used to hide memory from other processes
+
+# Remapping memory
+- Paging allows us to remap one address to anothyer, 0x100000 can point to 0x200000
+- 4096 block size by default. These blocks are called pages
+- When paging is enabled, the MMU (Memory Management Unit) will look at allocdated tabled to resolve virtual addresses into physical ones
+- Allows us to pretend there is memory when there is not
+
+# Virtual addresses vs physical addresses
+- Virtual addresses are addresses that are not ponting to the address in memory their value says they are
+- Physical addresses are absolute adddresses who point to the same address in memory
+- Terms to describe how a piece of memory is being accessed
+
+# Paging structure
+- 1024 page directoreis that point to 1024 page tables
+- 1024 page table enteries per page table
+- Each page table covers 4096 bytes of memory
+- Each 4096 block is called a page
+- 1024 * 1024 * 4096 = 4gb addressable memory
+
+# Page directory structure
+- Holds pointer to a page table
+- Holds attributes
+
+31                                  11     9                                  0
+| Paging table 4kb aligned address | Avail | G | S | 0 | A | D | W| U | R | P |
+
+- 4kb aligned address - physical 4096 aligned address to the start of a page table
+- S: set 0 for 4kb pages and 1 for 4mb pages
+- A: Set to 1 by CPU if this page is accessed
+- D: Cache disable bit. Set to 1 to disable page caching
+- W: If this  bit is set, write through caching is enabled. If not write back caching is enabled insteasd
+- U (User supervisor bit): If this is set, ti can be accesses by all ring levels. If it is not set, only the supervisor level can access this
+- R: If this bit is set, the page is readable and writable. IF it is not set, the page is only readable. Note: setting the WP bit in the CR0 register can allow writing in all cases for the supervisor
+- P: This bit is set if the page exists in real memroy. If this page is not actually availale, then we should set this bit to zero. If someone accesses this, a page fault will occur and we are expected to resolve it
+
+# Page table structure
+- Very siumilar to page direcotry structure
+
+# Page fault exception
+- CPU will call page interrupt 0x14 when there is a problem with paging
+- The exception is invoked if:
+ - You access a page in memory that does not have its 'P (Present)' bit set
+ - you access a page that is for supervisor, but you are not supervisor
+ - Write to a page that is read only and you are not a supervisor
+
+ # Hide memory from processes
+ - If we give each processes its own page directory table, then we can map the memory for the process however we want it to be. We can make it so the process only sees its self
+ - Hiding memory can be achieved by switching page directoryies when moving between processes
+ - All processes can access the same virtual memory addresses, but they will point to different physical addresses
+ - Kernel page table entry is linear. Page zero, directory zero. and virtual address 0x00 will point to physical address 0x00
+
+ # Illusion of more memory
+ - Pretend we have maximum amount of memory, even if we do not
+ - Acheived by creating page tables that are not presetn. When a process accesses this non existant page table, a page fault will occur. At this point we can load this memory from disk or network into memory and mapping it so the program can see it. We can then load the page back into memory, and the process has no idea
+ - 100MB system can act as if it has the fill 4GB on a 32 bit architecture system
+
+ # Benuifits to paging
+ - Each process can have the same virtual memory addresses and never override eachother
+ - Security is improved as we can map out the physical memory we dont want processes to see
+ - Can be used to prevent overwriting of sensitive data such as program code
+
+ 
