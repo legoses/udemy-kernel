@@ -1,0 +1,4 @@
+kheap_init global:[kernel_heap,kernel_heap_table] call:[heap_create,print] noreturn:[print]
+kmalloc global:[kernel_heap] call:[heap_malloc] noreturn:[heap_malloc]
+kzalloc call:[kmalloc,memset]
+kfree global:[kernel_heap] call:[heap_free] noreturn:[heap_free]

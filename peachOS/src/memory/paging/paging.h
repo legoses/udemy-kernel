@@ -26,9 +26,23 @@
 #define PAGING_IS_PRESENT      0b00000001 // is the memroy present is memory or does it need ot be loaded in from elsewhere?
 
 #define PAGING_TOTAL_ENTRIES_PER_TABLE 1024
+#define PAGING_PAGE_SIZE 4096
 
+
+// each directory entry managed a 4mb chunk of memory
+// each table entry manages a 4kb chunk of memory
+// the 10 most significant buts (22-31) represent the index in the directory entry array
+// the next 10 bits (12-21) represent the entr in the table array
+// This is how the entire 4gb of address space can be addressed with only 20 bits
+// a new directory struct can be created for each process
 struct paging_4gb_chunk {
-    uint23_t *directory_entry;
+    uint32_t *directory_entry;
 };
+
+struct paging_4gb_chunk *paging_new_4gb(uint8_t flags);
+void paging_switch(uint32_t *directory);
+void enable_paging(); // do not call until we have created a 4gb chunk and switched to that directory
+
+uint32_t *paging_4gb_chunk_get_directory(struct paging_4gb_chunk *chunk);
 
 #endif

@@ -1,1 +1,1 @@
-paging.a1::/home/suse/Documents/udemy-kernel/peachOS/src/memory/paging/paging.c
+kernel.a1::/home/suse/Documents/udemy-kernel/peachOS/src/kernel.c

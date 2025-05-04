@@ -4,6 +4,7 @@
 #include "idt/idt.h"
 #include "io/io.h"
 #include "memory/heap/kheap.h"
+#include "memory/paging/paging.h"
 
 
 uint16_t *video_mem = 0;
@@ -80,7 +81,7 @@ void print(const char *str) {
 }
 
 
-
+static struct paging_4gb_chunk *kernel_chunk = 0;
 
 void kernel_start() {
     // video_mem[0] = 0x0341; color and ascii code appear reversed because of endianess
@@ -91,6 +92,14 @@ void kernel_start() {
     kheap_init();
 
     idt_init(); // initialize interrupt descriptor table
+    
+    // setup paging
+    kernel_chunk = paging_new_4gb(PAGING_IS_WRITEABLE | PAGING_IS_PRESENT | PAGING_ACCESS_FROM_ALL); // enable paging
+    paging_switch(paging_4gb_chunk_get_directory(kernel_chunk)); // get directory from 4gb chunk and switch to it
+    
+    // enable paging
+    enable_paging();
+
     
     // enable system interripts after idt table is defined, so system does not panic if exception occurs, and instead property calls interrupt
     enable_interrupts();

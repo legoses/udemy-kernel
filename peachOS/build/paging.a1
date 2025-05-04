@@ -1,19 +1,10 @@
 <?xml version="1.0"?>
-<analyzerinfo hash="1827438337641728217">
-        <error id="constVariablePointer" severity="style" msg="Variable &apos;directory&apos; can be declared as pointer to const" verbose="Variable &apos;directory&apos; can be declared as pointer to const" cwe="398" file0="/home/suse/Documents/udemy-kernel/peachOS/src/memory/paging/paging.c">
-            <location file="/home/suse/Documents/udemy-kernel/peachOS/src/memory/paging/paging.c" line="5" column="15" info="Variable &apos;directory&apos; can be declared as pointer to const"/>
-            <symbol>directory</symbol>
+<analyzerinfo hash="5704933633492946170">
+        <error id="unusedStructMember" severity="style" msg="struct member &apos;paging_4gb_chunk::directory_entry&apos; is never used." verbose="struct member &apos;paging_4gb_chunk::directory_entry&apos; is never used." cwe="563" file0="/home/suse/Documents/udemy-kernel/peachOS/src/memory/paging/paging.h">
+            <location file="/home/suse/Documents/udemy-kernel/peachOS/src/memory/paging/paging.h" line="39" column="15"/>
+            <symbol>paging_4gb_chunk::directory_entry</symbol>
         </error>
-        <error id="constVariablePointer" severity="style" msg="Variable &apos;entry&apos; can be declared as pointer to const" verbose="Variable &apos;entry&apos; can be declared as pointer to const" cwe="398" file0="/home/suse/Documents/udemy-kernel/peachOS/src/memory/paging/paging.c">
-            <location file="/home/suse/Documents/udemy-kernel/peachOS/src/memory/paging/paging.c" line="8" column="19" info="Variable &apos;entry&apos; can be declared as pointer to const"/>
-            <symbol>entry</symbol>
-        </error>
-        <error id="unreadVariable" severity="style" msg="Variable &apos;directory&apos; is assigned a value that is never used." verbose="Variable &apos;directory&apos; is assigned a value that is never used." cwe="563" file0="/home/suse/Documents/udemy-kernel/peachOS/src/memory/paging/paging.c">
-            <location file="/home/suse/Documents/udemy-kernel/peachOS/src/memory/paging/paging.c" line="5" column="25"/>
-            <symbol>directory</symbol>
-        </error>
-        <error id="unreadVariable" severity="style" msg="Variable &apos;entry&apos; is assigned a value that is never used." verbose="Variable &apos;entry&apos; is assigned a value that is never used." cwe="563" file0="/home/suse/Documents/udemy-kernel/peachOS/src/memory/paging/paging.c">
-            <location file="/home/suse/Documents/udemy-kernel/peachOS/src/memory/paging/paging.c" line="8" column="25"/>
-            <symbol>entry</symbol>
-        </error>
+  <FileInfo check="Class">
+<class name="paging_4gb_chunk" file="/home/suse/Documents/udemy-kernel/peachOS/src/memory/paging/paging.h" line="38" col="1" hash="17943762738742432065"/>
+  </FileInfo>
 </analyzerinfo>
