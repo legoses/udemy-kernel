@@ -1,0 +1,5 @@
+int21h_handler call:[outb,print] noreturn:[outb]
+no_interrupt_handler call:[outb] noreturn:[outb]
+idt_zero call:[print] noreturn:[print]
+idt_set global:[idt_descriptors]
+idt_init global:[idt_descriptors,idtr_descriptor] call:[idt_load,idt_set,memset,sizeof] noreturn:[idt_load,idt_set]

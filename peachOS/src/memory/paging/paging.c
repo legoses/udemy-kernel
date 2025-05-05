@@ -1,5 +1,6 @@
 #include "paging.h"
 #include "memory/heap/kheap.h"
+#include "status.h"
 
 
 // because of how tabels are aligned in memory, only 21 bits are used for the address, the rest are flags
@@ -42,4 +43,31 @@ void paging_switch(uint32_t *directory) {
 
 uint32_t *paging_4gb_chunk_get_directory(struct paging_4gb_chunk *chunk) { // extract directory entry
     return chunk->directory_entry;
+}
+
+
+// make sure address is aligned with 4096 chunk of memory
+bool paging_is_aligned(void *addr) {
+    return ((uint32_t) addr % PAGING_PAGE_SIZE) == 0;
+}
+
+
+// take virtual address and get its directory entry and table index
+int paging_get_indexes(void *virtual_address, uint32_t *directory_index_out, uint32_t *table_index_out) {
+    int res = 0;
+
+    if(!paging_is_aligned(virtual_address)) { 
+        res = -EINVARG;
+        goto out;
+    }
+   
+    // set the address that directory_index_out points to to the value that is the address of the directory index, instead of setting dierctory_index_out to point to that address
+    // this is because we want the actual value of the address, not the contents that are stored at this address
+    *directory_index_out = ((uint32_t) virtual_address / (PAGING_TOTAL_ENTRIES_PER_TABLE * PAGING_PAGE_SIZE)); 
+
+    //get memory off set from directory entry, then divide by page size to convert to index number
+    *table_index_out = ((uint32_t) virtual_address % (PAGING_TOTAL_ENTRIES_PER_TABLE * PAGING_PAGE_SIZE) / PAGING_PAGE_SIZE);
+
+out:
+    return res;
 }

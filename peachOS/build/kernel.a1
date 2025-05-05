@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<analyzerinfo hash="13961103520126100007">
+<analyzerinfo hash="15342047415956148193">
   <FileInfo check="ctu">
 <function-call call-id="/home/suse/Documents/udemy-kernel/peachOS/src/kernel.c:16:10" call-funcname="terminal_make_char" call-argnr="2" file="/home/suse/Documents/udemy-kernel/peachOS/src/kernel.c" line="25" col="56" call-argexpr="color" call-argvaluetype="0" call-argvalue="0" call-argvalue-ufr="0">
   <path file="/home/suse/Documents/udemy-kernel/peachOS/src/kernel.c" line="56" col="41" info="Calling function &apos;terminal_putchar&apos;, 4th argument &apos;0&apos; value is 0"/>

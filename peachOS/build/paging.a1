@@ -1,10 +1,10 @@
 <?xml version="1.0"?>
-<analyzerinfo hash="5704933633492946170">
+<analyzerinfo hash="9779684970119923430">
         <error id="unusedStructMember" severity="style" msg="struct member &apos;paging_4gb_chunk::directory_entry&apos; is never used." verbose="struct member &apos;paging_4gb_chunk::directory_entry&apos; is never used." cwe="563" file0="/home/suse/Documents/udemy-kernel/peachOS/src/memory/paging/paging.h">
-            <location file="/home/suse/Documents/udemy-kernel/peachOS/src/memory/paging/paging.h" line="39" column="15"/>
+            <location file="/home/suse/Documents/udemy-kernel/peachOS/src/memory/paging/paging.h" line="40" column="15"/>
             <symbol>paging_4gb_chunk::directory_entry</symbol>
         </error>
   <FileInfo check="Class">
-<class name="paging_4gb_chunk" file="/home/suse/Documents/udemy-kernel/peachOS/src/memory/paging/paging.h" line="38" col="1" hash="17943762738742432065"/>
+<class name="paging_4gb_chunk" file="/home/suse/Documents/udemy-kernel/peachOS/src/memory/paging/paging.h" line="39" col="1" hash="17943762738742432065"/>
   </FileInfo>
 </analyzerinfo>

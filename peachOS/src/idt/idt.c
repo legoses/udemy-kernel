@@ -14,7 +14,7 @@ extern void int21h();
 extern void no_interrupt();
 
 void int21h_handler() {
-    print("Keyboard Press\n");
+    print("Keyboard Press");
     outb(0x20, 0x20); //send acknowledgment
 }
 

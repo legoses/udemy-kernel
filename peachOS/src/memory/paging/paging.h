@@ -3,6 +3,7 @@
 
 #include <stdint.h>
 #include <stddef.h>
+#include <stdbool.h>
 
 // page caching refers to something akin to a swap file. Pages that origionate from a secondary storage device like the hard drive or network
 #define PAGING_CACHE_DISABLED  0b00010000
