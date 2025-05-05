@@ -46,4 +46,7 @@ void enable_paging(); // do not call until we have created a 4gb chunk and switc
 
 uint32_t *paging_4gb_chunk_get_directory(struct paging_4gb_chunk *chunk);
 
+int paging_set(uint32_t *directory, void *virt, uint32_t val);
+bool paging_is_aligned(void *addr);
+
 #endif

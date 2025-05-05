@@ -1,7 +1,0 @@
-terminal_make_char call:[return]
-terminal_putchar global:[video_mem] call:[terminal_make_char] noreturn:[terminal_make_char]
-terminal_writechar global:[terminal_col,terminal_row] call:[terminal_putchar]
-terminal_initialize global:[terminal_col,terminal_row,video_mem] call:[terminal_putchar] noreturn:[terminal_putchar]
-strlen
-print call:[strlen,terminal_writechar] noreturn:[terminal_writechar]
-kernel_start global:[kernel_chunk] call:[enable_interrupts,enable_paging,idt_init,kheap_init,paging_4gb_chunk_get_directory,paging_new_4gb,paging_switch,print,terminal_initialize] noreturn:[enable_interrupts]
