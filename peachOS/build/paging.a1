@@ -1,10 +1,25 @@
 <?xml version="1.0"?>
-<analyzerinfo hash="17011513328754030807">
-        <error id="unusedStructMember" severity="style" msg="struct member &apos;paging_4gb_chunk::directory_entry&apos; is never used." verbose="struct member &apos;paging_4gb_chunk::directory_entry&apos; is never used." cwe="563" file0="/home/suse/udemy-kernel/peachOS/src/memory/paging/paging.h">
-            <location file="/home/suse/udemy-kernel/peachOS/src/memory/paging/paging.h" line="40" column="15"/>
-            <symbol>paging_4gb_chunk::directory_entry</symbol>
+<analyzerinfo hash="7360434913545495885">
+        <error id="constParameterPointer" severity="style" msg="Parameter &apos;chunk&apos; can be declared as pointer to const" verbose="Parameter &apos;chunk&apos; can be declared as pointer to const" cwe="398" file0="/home/suse/Documents/udemy-kernel/peachOS/src/memory/paging/paging.c">
+            <location file="/home/suse/Documents/udemy-kernel/peachOS/src/memory/paging/paging.c" line="44" column="67" info="Parameter &apos;chunk&apos; can be declared as pointer to const"/>
+            <symbol>chunk</symbol>
         </error>
-  <FileInfo check="Class">
-<class name="paging_4gb_chunk" file="/home/suse/udemy-kernel/peachOS/src/memory/paging/paging.h" line="39" col="1" hash="17943762738742432065"/>
+        <error id="constParameterPointer" severity="style" msg="Parameter &apos;directory&apos; can be declared as pointer to const" verbose="Parameter &apos;directory&apos; can be declared as pointer to const" cwe="398" file0="/home/suse/Documents/udemy-kernel/peachOS/src/memory/paging/paging.c">
+            <location file="/home/suse/Documents/udemy-kernel/peachOS/src/memory/paging/paging.c" line="77" column="26" info="Parameter &apos;directory&apos; can be declared as pointer to const"/>
+            <symbol>directory</symbol>
+        </error>
+  <FileInfo check="ctu">
+<function-call call-id="/home/suse/Documents/udemy-kernel/peachOS/src/memory/paging/paging.c:56:5" call-funcname="paging_get_indexes" call-argnr="2" file="/home/suse/Documents/udemy-kernel/peachOS/src/memory/paging/paging.c" line="85" col="33" call-argexpr="&amp;directory_index" call-argvaluetype="7" call-argvalue="4" call-argvalue-ufr="0"/><function-call call-id="/home/suse/Documents/udemy-kernel/peachOS/src/memory/paging/paging.c:56:5" call-funcname="paging_get_indexes" call-argnr="3" file="/home/suse/Documents/udemy-kernel/peachOS/src/memory/paging/paging.c" line="85" col="33" call-argexpr="&amp;table_index" call-argvaluetype="7" call-argvalue="4" call-argvalue-ufr="0"/><function-call call-id="/home/suse/Documents/udemy-kernel/peachOS/src/memory/paging/paging.c:10:6" call-funcname="paging_load_directory" call-argnr="1" file="/home/suse/Documents/udemy-kernel/peachOS/src/memory/paging/paging.c" line="39" col="5" my-id="/home/suse/Documents/udemy-kernel/peachOS/src/memory/paging/paging.h:44:6" my-argnr="1"/>
+<function-call call-id="/home/suse/Documents/udemy-kernel/peachOS/src/memory/paging/paging.h:50:6" call-funcname="paging_is_aligned" call-argnr="1" file="/home/suse/Documents/udemy-kernel/peachOS/src/memory/paging/paging.c" line="59" col="9" my-id="/home/suse/Documents/udemy-kernel/peachOS/src/memory/paging/paging.c:56:5" my-argnr="1"/>
+<function-call call-id="/home/suse/Documents/udemy-kernel/peachOS/src/memory/paging/paging.h:50:6" call-funcname="paging_is_aligned" call-argnr="1" file="/home/suse/Documents/udemy-kernel/peachOS/src/memory/paging/paging.c" line="78" col="9" my-id="/home/suse/Documents/udemy-kernel/peachOS/src/memory/paging/paging.h:49:5" my-argnr="2"/>
+  </FileInfo>
+  <FileInfo check="Null pointer">
+    <unsafe-usage my-id="/home/suse/Documents/udemy-kernel/peachOS/src/memory/paging/paging.h:47:11" my-argnr="1" my-argname="chunk" file="/home/suse/Documents/udemy-kernel/peachOS/src/memory/paging/paging.c" line="45" col="12" value="0"/>
+    <unsafe-usage my-id="/home/suse/Documents/udemy-kernel/peachOS/src/memory/paging/paging.c:56:5" my-argnr="2" my-argname="directory_index_out" file="/home/suse/Documents/udemy-kernel/peachOS/src/memory/paging/paging.c" line="66" col="6" value="0"/>
+    <unsafe-usage my-id="/home/suse/Documents/udemy-kernel/peachOS/src/memory/paging/paging.c:56:5" my-argnr="3" my-argname="table_index_out" file="/home/suse/Documents/udemy-kernel/peachOS/src/memory/paging/paging.c" line="69" col="6" value="0"/>
+  </FileInfo>
+  <FileInfo check="Uninitialized variables">
+    <unsafe-usage my-id="/home/suse/Documents/udemy-kernel/peachOS/src/memory/paging/paging.h:47:11" my-argnr="1" my-argname="chunk" file="/home/suse/Documents/udemy-kernel/peachOS/src/memory/paging/paging.c" line="45" col="12" value="0"/>
+    <unsafe-usage my-id="/home/suse/Documents/udemy-kernel/peachOS/src/memory/paging/paging.h:50:6" my-argnr="1" my-argname="addr" file="/home/suse/Documents/udemy-kernel/peachOS/src/memory/paging/paging.c" line="51" col="24" value="0"/>
   </FileInfo>
 </analyzerinfo>

@@ -97,8 +97,21 @@ void kernel_start() {
     kernel_chunk = paging_new_4gb(PAGING_IS_WRITEABLE | PAGING_IS_PRESENT | PAGING_ACCESS_FROM_ALL); // enable paging
     paging_switch(paging_4gb_chunk_get_directory(kernel_chunk)); // get directory from 4gb chunk and switch to it
     
+    char *ptr = kzalloc(4096);
+    // this maps physical address 0x1000 to the ptr variable
+    //paging_set(paging_4gb_chunk_get_directory(kernel_chunk), (void*)0x1000, (uint32_t)ptr | PAGING_ACCESS_FROM_ALL | PAGING_IS_PRESENT | PAGING_IS_WRITEABLE);
+
+    
     // enable paging
     enable_paging();
+   
+    /*
+    char *ptr2 = (char*)0x1000;
+    ptr2[0] = 'A';
+    ptr2[1] = 'B';
+    print(ptr2);
+    print(ptr);
+    */
 
     
     // enable system interripts after idt table is defined, so system does not panic if exception occurs, and instead property calls interrupt
