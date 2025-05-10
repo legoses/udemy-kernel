@@ -92,6 +92,9 @@ void kernel_start() {
     // initialize heap
     kheap_init();
 
+    // search and initialize disks
+    disk_search_and_init();
+
     idt_init(); // initialize interrupt descriptor table
     
     // setup paging
@@ -113,9 +116,6 @@ void kernel_start() {
     print(ptr2);
     print(ptr);
     */
-
-    char buf[512];
-    disk_read_sector(0, 1, buf); // read 1 sector starting from address 0x0 into buf
 
     
     // enable system interripts after idt table is defined, so system does not panic if exception occurs, and instead property calls interrupt
