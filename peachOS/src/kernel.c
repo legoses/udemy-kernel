@@ -5,6 +5,7 @@
 #include "io/io.h"
 #include "memory/heap/kheap.h"
 #include "memory/paging/paging.h"
+#include "disk/disk.h"
 
 
 uint16_t *video_mem = 0;
@@ -97,7 +98,7 @@ void kernel_start() {
     kernel_chunk = paging_new_4gb(PAGING_IS_WRITEABLE | PAGING_IS_PRESENT | PAGING_ACCESS_FROM_ALL); // enable paging
     paging_switch(paging_4gb_chunk_get_directory(kernel_chunk)); // get directory from 4gb chunk and switch to it
     
-    char *ptr = kzalloc(4096);
+    //char *ptr = kzalloc(4096);
     // this maps physical address 0x1000 to the ptr variable
     //paging_set(paging_4gb_chunk_get_directory(kernel_chunk), (void*)0x1000, (uint32_t)ptr | PAGING_ACCESS_FROM_ALL | PAGING_IS_PRESENT | PAGING_IS_WRITEABLE);
 
@@ -112,6 +113,9 @@ void kernel_start() {
     print(ptr2);
     print(ptr);
     */
+
+    char buf[512];
+    disk_read_sector(0, 1, buf); // read 1 sector starting from address 0x0 into buf
 
     
     // enable system interripts after idt table is defined, so system does not panic if exception occurs, and instead property calls interrupt
