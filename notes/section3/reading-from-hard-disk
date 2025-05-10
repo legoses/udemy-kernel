@@ -1,0 +1,14 @@
+# PCI IDE controller
+- IDE refers to the electrical specification of cables which connects an ATA drive to another device
+- IDE devices allow 4 other drives to be connected
+  1. ATA (Serial): used for modern hard drives
+  2. ATA (Parallel): Used for hard drives
+  3. ATAPI (Serial): Used for modern optical drives
+  4. ATAPI (Parallel): Used for optical drives
+- Kernel programmers do not need to worry about if the drive is serial or parallel
+
+# Possible drive types
+- Primary master drive
+- Primary slave drive
+- Secondary master drive
+- Secondary slave drive
