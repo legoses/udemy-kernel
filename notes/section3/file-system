@@ -1,0 +1,24 @@
+# What is a file system
+- Structure that describes how information is laid out on a disk
+- disks are not aware of files
+- Operating systems knows the filesystem structore so it knows how to read files from the disk
+
+# Disks
+- giant array of information split into sectors
+- Each sector can be read into memory and is given an LBA (Logical Block Address) number
+- Files do not exist on the disk
+
+# Filesystem structure
+- Disk contains raw data for files
+- Contains the filesystem structure header, which can explain things like how many files are on the disk, where the root directory is located, and so on
+- The way files are laid out on the disk depends on the filesystem you are using
+- Without filesystems, we would be forced to read and write data using sector numbers, structure would not exist and corruption would be likely
+
+# FAT16 (File Allocation Table) 16 bits
+- First sector in this filesystems is usually the boot sector on the disk. Fields in this sector also exist the describe the filesystem, such as how many reserved sectors follow this sector
+- Next are the reserved sectors that are ignored by the filesystem. There is a field in the boot sector that describes where these are
+- Next is the first file allocation table. This describes which clusters on the disk are taken and which are free. A cluster is a certain number of sectors joined together to form a cluster of sectors
+- Next is the second file allocation table. It is optional, and depends on the FAT16 header in the boot section. Can be used as a backup in case of corruption
+- Next is the root directory, which explains what files and directories are in the file system. Each entry has a relative name that represents the directory or file name, attributes such as read only, the address of 
+  the first cluster that represents the data on the disk and more
+- Finally, we have the data region. This is where the data actually lies
