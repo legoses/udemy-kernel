@@ -1,0 +1,2 @@
+- Add 420ms delay when selecting disk by reading 15 times
+- add ahci sata driver
