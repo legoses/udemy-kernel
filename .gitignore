@@ -2,5 +2,5 @@ binutils/
 gcc/
 peachOS/bin/*
 !peachOS/bin/.keep
-peachos/build/*
-!peachos/build/.keep
+peachOS/build/*
+!peachOS/build/*.keep

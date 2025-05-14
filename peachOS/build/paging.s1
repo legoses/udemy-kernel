@@ -1,6 +1,0 @@
-paging_new_4gb call:[kzalloc,sizeof]
-paging_switch global:[current_directory] call:[paging_load_directory]
-paging_4gb_chunk_get_directory
-paging_is_aligned call:[return]
-paging_get_indexes call:[paging_is_aligned]
-paging_set call:[paging_get_indexes,paging_is_aligned]

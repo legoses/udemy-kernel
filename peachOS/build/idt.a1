@@ -1,5 +1,0 @@
-<?xml version="1.0"?>
-<analyzerinfo hash="3635117213237039687">
-  <FileInfo check="ctu">
-<function-call call-id="/home/suse/Documents/udemy-kernel/peachOS/src/idt/idt.c:32:6" call-funcname="idt_set" call-argnr="1" file="/home/suse/Documents/udemy-kernel/peachOS/src/idt/idt.c" line="52" col="12" call-argexpr="0" call-argvaluetype="0" call-argvalue="0" call-argvalue-ufr="0"/><function-call call-id="/home/suse/Documents/udemy-kernel/peachOS/src/idt/idt.c:12:13" call-funcname="idt_load" call-argnr="1" file="/home/suse/Documents/udemy-kernel/peachOS/src/idt/idt.c" line="54" col="13" call-argexpr="&amp;idtr_descriptor" call-argvaluetype="7" call-argvalue="0" call-argvalue-ufr="0"/>  </FileInfo>
-</analyzerinfo>
