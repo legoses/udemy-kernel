@@ -3,23 +3,3 @@ gcc/
 peachOS/bin/*
 !peachOS/bin/.keep
 
-peachOS/build/disk/*
-!peachOS/build/disk/.keep
-
-peachOS/build/idt/*
-!peachOS/build/idt/.keep
-
-peachOS/build/io/*
-!peachOS/build/io/.keep
-
-peachOS/build/memory/heap/*
-!peachOS/build/heap/memory/.keep
-
-peachOS/build/memory/paging/*
-!peachOS/build/memory/paging/.keep
-
-peachOS/build/memory/*
-!peachOS/build/memory/.keep
-
-peachOS/build/*
-!peachOS/build/.keep
