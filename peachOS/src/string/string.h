@@ -3,9 +3,9 @@
 
 #include <stdbool.h>
 
-int strlen(const char *ptr);
+// int strlen(const char *ptr);
 int strnlen(const char *ptr, int max);
-bool isigit(char c);
+bool isdigit(char c);
 int tonumericdigit(char c);
 
 #endif
