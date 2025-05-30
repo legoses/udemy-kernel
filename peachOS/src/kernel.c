@@ -5,7 +5,9 @@
 #include "io/io.h"
 #include "memory/heap/kheap.h"
 #include "memory/paging/paging.h"
+#include "string/string.h"
 #include "disk/disk.h"
+#include "fs/pparser.h"
 
 
 uint16_t *video_mem = 0;
@@ -61,16 +63,6 @@ void terminal_initialize() {
 }
 
 
-size_t strlen(const char *str) {
-    size_t len = 0;
-
-    while(str[len]) { // while value of str[len] != 0 or '\0'
-        len++;
-    }
-
-    return len;
-}
-
 
 // write a string to the screen
 void print(const char *str) {
@@ -120,4 +112,9 @@ void kernel_start() {
     
     // enable system interripts after idt table is defined, so system does not panic if exception occurs, and instead property calls interrupt
     enable_interrupts();
+
+    struct path_root *root_path = pathparser_parse("0:/bin/bash.sh", NULL);
+    if(root_path) {
+
+    }
 }

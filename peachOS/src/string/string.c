@@ -1,6 +1,5 @@
 #include "string/string.h"
 
-/*
 int strlen(const char *ptr) {
     int i = 0;
     while(*ptr != 0) {
@@ -10,7 +9,6 @@ int strlen(const char *ptr) {
 
     return i;
 }
-*/
 
 int strnlen(const char *ptr, int max) {
     int i = 0;
