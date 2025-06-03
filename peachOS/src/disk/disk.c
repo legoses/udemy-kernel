@@ -58,6 +58,7 @@ struct disk *disk_get(int index) {
 
 // abstract reading from the disk into a buffer, make sure we are reading from the correct disk
 // buffer is void because we are reading unstructured data and casting it later
+// reads an entore secor at a time
 int disk_read_block(struct disk *idisk, unsigned int lba, int total, void *buf) {
     if(idisk != &disk) {
         return -EIO;
