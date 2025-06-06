@@ -3,6 +3,15 @@
 #include "config.h"
 
 
+/*
+    * Previous to this file, the only way to read from the disk was by reading entire blocks at a time
+    * The basic idea of this is to read a sigle block into memory, then gather the necessary data from
+    * that block going sector by sector.
+    * A new block is only loaded when necessary
+    * This is done to reduce cpu load, because when reading from the disk all data passes throug the CPU
+*/
+
+
 // create a new disk streamer
 struct disk_stream *diskstreamer_new(int disk_id) {
     struct disk *disk = disk_get(disk_id);
@@ -10,7 +19,7 @@ struct disk_stream *diskstreamer_new(int disk_id) {
         return 0;
     }
 
-    struct disk_stream *streamer = kzallox(sizeof(struct disk_stream));
+    struct disk_stream *streamer = kzalloc(sizeof(struct disk_stream));
     streamer->pos = 0;
     streamer->disk = disk;
 
@@ -25,12 +34,14 @@ int diskstreamer_seek(struct disk_stream *stream, int pos) {
 }
 
 
+// the basic idea of this is to read by a sector at a time instead of a block
 int diskstreamer_read(struct disk_stream *stream, void *out, int total) {
     int sector = stream->pos / PEACHOS_SECTOR_SIZE; // get the sector number we will be reading from
     int offset = stream->pos % PEACHOS_SECTOR_SIZE; // get of off set from the start of the sector we will be readinf from
     char buf[PEACHOS_SECTOR_SIZE];
 
     //load the desired sector into the buf
+    // call disk_read_block, but only load a single block into the buffer
     int res = disk_read_block(stream->disk, sector, 1, buf);
     if(res < 0) {
         goto out;
@@ -42,7 +53,7 @@ int diskstreamer_read(struct disk_stream *stream, void *out, int total) {
     // loop through the buffer, read into out, while iterating out pointer
     // iterate count is set to what user asked for, so it will not overflow
     for(int i = 0; i < total_to_read; i++) {
-        *(char*)out++ = buf[offset+i]
+        *(char*)out++ = buf[offset+i];
     }
 
 
@@ -54,4 +65,10 @@ int diskstreamer_read(struct disk_stream *stream, void *out, int total) {
 
 out:
     return res;
+}
+
+
+// close the stream after use
+void diskstream_close(struct disk_stream *stream) {
+    kfree(stream);
 }
