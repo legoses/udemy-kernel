@@ -1,0 +1,27 @@
+# File allocation table
+- File system developed my microsoft
+- A series of clusters that hold data, and a table that determines the state of a cluster
+- Boot sector stores information about the filesystem
+
+# Fat 16 filesystem
+- Uses clusters to represent data abd subdirectories
+- Each cluter uses a fixed amount of data which is specified in the boot sector
+- Every file in fat16 uses at least 1 cluster to store its data. this is ineffecient and means a lot of storage is wasted
+- Fat16 cant store files larger than 2gb without large file support. With large file support it can store files up to 4gb
+
+# Fat16 disk layout
+Name                | Size
+Boot sector         | 512 bytes (total reserved sectors. Includes boot sector itsself)
+Reserved sectors    | fat_sector.reserved_header * 512 
+Fat1                | fat_headers.sectors_per_fat * 512 (info about which part of the disk is free/used)
+fat2 (optional)     | fat_header.sectors_per_fat * 512 (duplicate/backup of fat1)
+root directory      | fat_header.root_dir_entries * sizeof(struct fat_directory_item) rounded to next sector if needed
+data clusters       | X
+
+
+# More fat16 file allocation info!!!!!!
+- each entry in the table is 2 bytes long and represents a cluter in the data cluster region that is taken or available
+- Clusters can chain together. For example, a file that is larger than a cluster will take up 2 clusters.
+  The value that represents the first cluster in the file allocation table, will contain the value (pointer to) of the next clutser
+  The final cluster will contain a value of 0xffff signigying that there are no more clusters
+- The size of a cluster is represented in the boot sector
