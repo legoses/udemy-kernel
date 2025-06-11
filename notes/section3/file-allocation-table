@@ -25,3 +25,40 @@ data clusters       | X
   The value that represents the first cluster in the file allocation table, will contain the value (pointer to) of the next clutser
   The final cluster will contain a value of 0xffff signigying that there are no more clusters
 - The size of a cluster is represented in the boot sector
+
+
+# Fat16 root directory
+- top most directory in the system
+- Contains directory entries of a fixed size
+  - struct holding information stuch as filename, attributes, creation time, creation date
+
+# subdirectory entries
+- any directory that is not the root direcotry
+- Similar file structure to the root directory entry
+
+# Iterate through directories
+- Boot directory contaisn the max numvber of direcotry entrier
+ - This numebr should noe be excceeded when iterating through the root directory
+- We know we have finished iterating through the root directory or subdirectory because the first byte of the filename will be equal to zero
+ - Basically  a null terminator in the file name section of the directory struct
+
+ # Directory entry sttribute flags
+ - 0x01 - read only
+ - 0x02 - file hidden
+ - 0x04 - system file, do not move the clusters
+ - 0x08 - volume label
+ - 0x10 - This is not a regular file, this is a subdirectory. If this is not set, this directory entry represents a regular file
+ - 0x20 - archived
+ - 0x40 - device
+ - 0x80 - reserved, must not be changed by disk tools
+
+
+ # fat16 filename and extension
+ - filename is 8 bytes wide and unused bytes are padded with spaces, not null terminators
+ - extension is 3 bytes wide, and also padded with spaces instead of null terminators
+ - This is also why spaces are illegal in this file system
+
+ # clusters
+- a cluster represents a certian amount of sectors linearly next to each other
+- the amount of sectors that fit in a cluster is stored in the boot sector
+- the data cluters section in the filesystem contains all the cluters thta make up subdirectories and file data of files throughout the fat file system

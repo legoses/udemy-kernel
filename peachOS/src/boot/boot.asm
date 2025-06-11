@@ -6,16 +6,36 @@ BITS 16 ; specify this is 16 bit code
 CODE_SEG equ gdt_code - gdt_start
 DATA_SEG equ gdt_data - gdt_start
 
-_start:
     ; short jmp are usually used for jumping somehwere in the same module
     ; 2 byte instruction, literally jumping a short distance
     ; often uses a relative offet, so it is easier to relocate in memory
-    jmp short start
-    nop ; no operation
+
+; these two instructions create the 3 byte offset in the fat16 header
+jmp short start
+nop ; no operation
+
+
+; FAT16 HEADER
+OEMIdentifier      db 'PEACHOS ' ; must be 8 bytes
+BytesPerSector     dw 0x200 ; specify 512 bytes per sector. Generally ignroed 
+SectorsPerCluster  db 0x80
+ReservedSectors    dw 200
+FATCopies          db 0x02
+RootDirEntries     dw 0x40
+NumSectors         dw 0x00
+MediaType          db 0xF8
+SectorsPerFat      dw 0x100
+SectorsPerTrack    dw 0x20
+NumberOfHeads      dw 0x40
+HiddenSectors      dd 0x00
+SectorsBig         dd 0x773594
+
 
 ; create empty bytes for bios boot parameter block
 ; can safely be overwritten
-times 33 db 0 ; created 33 bytes after short jump
+
+; this was implemented to make room for the fat16 header
+;times 33 db 0 ; created 33 bytes after short jump
 
 start:
     jmp 0:step2; starts program at a specific memory address
