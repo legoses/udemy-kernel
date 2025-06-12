@@ -1,0 +1,27 @@
+# VFS layer overview
+- Virtual file system layer allows kernel to support inifite amount of file systems
+- abstract out low level code such as read/ write operations
+- Filesystem functionality to be loaded/unloaded to the kernel at any time
+
+
+# UNLIMITED FILE SYSTEMS YYYYYYYEEEEEEEEEAAAAAAAAAAHHHHHHHHHHHHHHHHHH
+- file system driver can be loeaded or unloaded on demand
+- programming interface for a file system is the same across all file systems
+
+# What happens whena disk gets inserted
+- poll each filesystem and ask if ti holds a file system it can manage
+- this is called resolving the filesystem
+- when a file system that can be used is found, the disk binds itsself to that implementation
+
+# Communication
+- User programs -> kernel -> FAT16, EXT4, FAT32
+
+# fopen communication
+- fopen("0:/test.txt", "r");
+- user program -> kernel
+- kernel -> path parser -> return path root and path part -> kernel
+
+# fread communication
+- fread(buf, 10, 1, file_descriptor)
+- user program -> kernel
+- kernel -> file descriptor (figure out file system) -> FAT16 -> fread (pass parameters) -> buf
