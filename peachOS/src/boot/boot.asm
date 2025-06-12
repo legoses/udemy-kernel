@@ -16,19 +16,30 @@ nop ; no operation
 
 
 ; FAT16 HEADER
+; Many of these are self explanitory
 OEMIdentifier      db 'PEACHOS ' ; must be 8 bytes
 BytesPerSector     dw 0x200 ; specify 512 bytes per sector. Generally ignroed 
 SectorsPerCluster  db 0x80
 ReservedSectors    dw 200
 FATCopies          db 0x02
 RootDirEntries     dw 0x40
-NumSectors         dw 0x00
+NumSectors         dw 0x00 ; total number of sectors in a volume. if this is 0, it means there are more than 65535 sectors in the volume, and actual count is stored in the large sector cont at entry 20
 MediaType          db 0xF8
 SectorsPerFat      dw 0x100
 SectorsPerTrack    dw 0x20
 NumberOfHeads      dw 0x40
 HiddenSectors      dd 0x00
-SectorsBig         dd 0x773594
+SectorsBig         dd 0x773594 ; this indicated the total number of sectors, since it is greater than 65536
+
+
+; extended BPB (DOS 4.0)
+DriveNUmber         db 0x80 ; should be identical to the value returned by BIOS interrupt 0x13, or passed in the DL register. 0x00 for floppy disks, adn 0x80 for hard disks
+WinNTBit            db 0x00 ; flags for windows NT, reserved other wise
+Signature           db 0x29 ; fat signature. must be either 28 or 29
+VolumeID            dd 0xD105 ; used for tracking volumes between computers. A serial number. Apparenty can be ignored
+VolumeIDString      db 'PEACHOS BOO' ; volume label string
+SystemIDString      db 'FAT16   ' ; identifier string. string representation of the FAT  file system type, spec says to never trust its contents for any use
+
 
 
 ; create empty bytes for bios boot parameter block
