@@ -33,4 +33,25 @@ struct filesystem {
     char name[20];
 };
 
+
+struct file_descriptor {
+    // Descriptor index
+    int index;
+    struct filesystem *filesystem;
+
+    // private data for internal file descriptor
+    // to be used by file system to cast data into appropriate form and make use of
+    // we are not necessarily aware of what this is
+    void *private;
+
+    // the disk the file descriptor should be used on
+    struct disk *disk;
+};
+
+
+void fs_init();
+int fopen(const char *filename, const char *mode);
+void fs_insert_filesystem(struct filesystem *filesystem);
+struct filesystem *fs_resolve(struct disk *disk);
+
 #endif
