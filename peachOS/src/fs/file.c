@@ -1,11 +1,15 @@
 #include "file.h"
 #include "config.h"
+#include "memory/memory.h"
+#include "status.h"
+#include "memory/kheap.h"
+
 
 // represents every filesystem on the system
 struct filesystem *filesystems[PEACHOS_MAX_FILESYSTEMS];
 struct file_descriptor *file_descriptors[PEACHOS_MAX_FILE_DESCRIPTORS];
 
-static struct filesystems *fs_get_free_filesystem() {
+static struct filesystems **fs_get_free_filesystem() {
     int i = 0;
 
     /*
@@ -16,5 +20,61 @@ static struct filesystems *fs_get_free_filesystem() {
     }
     */
 
-    for(i = 0; i < PEACHOS_MAX_FILESYSTEMS && filesystems[i] != 0; ++i); // test. probably wont work in this case
+    // search through file systems
+    // trying to be fancy with my code here. may not work
+    for(i = 0; i < PEACHOS_MAX_FILESYSTEMS && filesystems[i] != 0; ++i) {} // test. probably wont work in this case
+    if(i != 0)
+        return &filesystems[i];
+        
+    return 0;
+}
+
+
+void fs_insert_filesystem(struct filesystem *filesystem) {
+    struct filesystem **fs = fs_get_free_filesystem();
+
+    if(!fs) {
+        print("Problem inserting filesystem");
+        while(1) {} // will replace with panic function later
+    } 
+
+    *fs = filesystem; // this fills the location provided by fs_get_free_filesystem with the filesystem passed to this function
+}
+
+
+// load filesystems that are build into the kernel
+static void fs_static_load() {
+    
+}
+
+
+// zero out filesystems memroy before loading
+void fs_load() {
+    memset(filesystems, 0, sizeof(filesystems));
+    fs_static_load();
+}
+
+
+// begin procress and prepare arrays to load kernel file systems
+void fs_init() {
+    memset(file_descriptors, 0. sizeof(file_descriptors));
+    fs_load();
+}
+
+
+static int file_new_descriptor(struct file_descriptor **desc_out) {
+    int res = -ENOMEM;
+
+    for(int i = 0; i < PEACHOS_MAX_FILE_DESCRIPTORS; i++) {
+        if(file_descriptors[i] == 0) { // if we find an unallocated entry in this array
+            struct file_descriptor *desc = kzaloc(sizeof(struct file_descriptor));
+            desc->index = i + 1; // descriptors start at 1
+            file_descriptor[i] = desc;
+            *desc_out = desc;
+            res = 0;
+            break;
+        }
+    }
+
+    return res;
 }
