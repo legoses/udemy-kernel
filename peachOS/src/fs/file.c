@@ -2,7 +2,8 @@
 #include "config.h"
 #include "memory/memory.h"
 #include "status.h"
-#include "memory/kheap.h"
+#include "memory/heap/kheap.h"
+#include "kernel.h"
 
 
 // represents every filesystem on the system
@@ -77,4 +78,35 @@ static int file_new_descriptor(struct file_descriptor **desc_out) {
     }
 
     return res;
+}
+
+
+static struct file_descriptor *file_get_descriptor(int fd) {
+    if(fd <= 0 || fd >= PEACHOS_MAX_FILE_DESCRIPTORS) {
+        return 0;
+    }
+
+    //descriptors start at 1
+    int index = fd-1;
+    return file_descriptors[index];
+}
+
+
+// loop through filesystems, and call resolve function to determing filesystem
+struct filesystem *fs_resolve(struct disk *disk) {
+    struct filesystem *fs = 0;
+    for(int i = 0; i < PEACHOS_MAX_FILESYSTEMS; i++) { // loop through all filesystems loaded into the system
+        // file systems define their own resolve function, so we do not need to define
+        if(filesystems[i] != 0 && filesystems[i]->resolve(disk) == 0) { // resolve function is defined in the filesystem struct
+            fs = filesystems[i];
+            break;
+        }
+    }
+
+    return fs;
+}
+
+
+int fopen(const char *filename, const char *mode) {
+    return -EIO; // return IO error because this has not yet been implemented
 }

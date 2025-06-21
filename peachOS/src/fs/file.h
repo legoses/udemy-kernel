@@ -1,6 +1,8 @@
 #ifndef FILE_H
 #define FILE_H
 
+#include "fs/pparser.h"
+
 typedef unsigned int FILE_SEEK_MODE;
 enum {
     SEEK_SET,

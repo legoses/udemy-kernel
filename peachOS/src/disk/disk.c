@@ -44,6 +44,9 @@ void disk_search_and_init() {
      memset(&disk, 0, sizeof(disk));
     disk.type = PEACHOS_DISK_TYPE_REAL;
     disk.sector_size = PEACHOS_SECTOR_SIZE;
+    // loop through all loaded file systems
+    // each file system contains its own resolve function, which we will call in fs_resolve to determine fs type
+    disk.resolve = fs_resolve(&disk); 
 }
 
 
