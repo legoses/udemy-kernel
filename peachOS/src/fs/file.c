@@ -10,7 +10,7 @@
 struct filesystem *filesystems[PEACHOS_MAX_FILESYSTEMS];
 struct file_descriptor *file_descriptors[PEACHOS_MAX_FILE_DESCRIPTORS];
 
-static struct filesystems **fs_get_free_filesystem() {
+static struct filesystem **fs_get_free_filesystem() {
     int i = 0;
 
     /*
@@ -58,7 +58,7 @@ void fs_load() {
 
 // begin procress and prepare arrays to load kernel file systems
 void fs_init() {
-    memset(file_descriptors, 0. sizeof(file_descriptors));
+    memset(file_descriptors, 0, sizeof(file_descriptors));
     fs_load();
 }
 
@@ -68,9 +68,9 @@ static int file_new_descriptor(struct file_descriptor **desc_out) {
 
     for(int i = 0; i < PEACHOS_MAX_FILE_DESCRIPTORS; i++) {
         if(file_descriptors[i] == 0) { // if we find an unallocated entry in this array
-            struct file_descriptor *desc = kzaloc(sizeof(struct file_descriptor));
+            struct file_descriptor *desc = kzalloc(sizeof(struct file_descriptor));
             desc->index = i + 1; // descriptors start at 1
-            file_descriptor[i] = desc;
+            file_descriptors[i] = desc;
             *desc_out = desc;
             res = 0;
             break;
