@@ -27,6 +27,18 @@ bool isdigit(char c) {
 }
 
 
+char *strcpy(char *dest, const char *src) {
+    char *res = dest;
+    while(*src != 0) {
+        *dest = *src; // set equal to value stored at current location pointed to by src
+        src += 1; // increase pointer counter for these two
+        dest += 1;
+    }
+
+    return res;
+}
+
+
 int tonumericdigit(char c) {
     return c - 48;
 }
