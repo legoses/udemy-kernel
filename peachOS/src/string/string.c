@@ -26,6 +26,9 @@ bool isdigit(char c) {
     return c >= 48 && c <= 57;
 }
 
+/*
+* strncpy?
+*/
 
 char *strcpy(char *dest, const char *src) {
     char *res = dest;
@@ -34,6 +37,8 @@ char *strcpy(char *dest, const char *src) {
         src += 1; // increase pointer counter for these two
         dest += 1;
     }
+
+    *dest = 0x00; // null terminator for string
 
     return res;
 }

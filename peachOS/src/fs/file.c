@@ -2,6 +2,7 @@
 #include "config.h"
 #include "memory/memory.h"
 #include "status.h"
+#include "fat/fat16.h"
 #include "memory/heap/kheap.h"
 #include "kernel.h"
 
@@ -45,7 +46,7 @@ void fs_insert_filesystem(struct filesystem *filesystem) {
 
 // load filesystems that are build into the kernel
 static void fs_static_load() {
-    
+    fs_insert_filesystem(fat16_init());
 }
 
 

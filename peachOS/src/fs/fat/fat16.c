@@ -1,4 +1,4 @@
-#inlcude "fat16.h"
+#include "fat16.h"
 #include "string/string.h"
 #include "status.h"
 
@@ -13,7 +13,7 @@ struct filesystem fat16_fs = {
 
 struct filesystem *fat16_init() {
     strcpy(fat16_fs.name, "FAT16");
-    return 0;
+    return &fat16_fs;
 }
 
 
