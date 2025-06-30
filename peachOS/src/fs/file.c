@@ -14,17 +14,17 @@ struct file_descriptor *file_descriptors[PEACHOS_MAX_FILE_DESCRIPTORS];
 static struct filesystem **fs_get_free_filesystem() {
     int i = 0;
 
-    /*
+    
     for(i = 0; i < PEACHOS_MAX_FILESYSTEMS; i++) {
         if(filesystems[i] == 0) {
             return &filesystems[i]; //return a pointer to that position in the array
         }
     }
-    */
+    
 
     // search through file systems
     // trying to be fancy with my code here. may not work
-    for(i = 0; i < PEACHOS_MAX_FILESYSTEMS && filesystems[i] != 0; ++i) {} // test. probably wont work in this case
+    //for(i = 0; i < PEACHOS_MAX_FILESYSTEMS && filesystems[i] != 0; ++i) {} // test. probably wont work in this case
     if(i != 0)
         return &filesystems[i];
         

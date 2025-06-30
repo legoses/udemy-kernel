@@ -19,7 +19,7 @@ struct filesystem *fat16_init() {
 
 // params are taken from FS_RESOLVE_FUNCTION pointer defined in file.h
 int fat16_resolve(struct disk *disk) {
-    return -EIO;
+    return 0;
 }
 
 
