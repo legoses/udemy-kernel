@@ -28,11 +28,11 @@ typedef unsigned int FAT_ITEM_TYPE;
 
 struct fat_header_extended {
     uint8_t drive_number;
-    uint8_t win_nt_bit;
+    uint8_t win_nt_bit; //only used for devices running windows nt, otherwise reserved
     uint8_t signature;
     uint8_t volume_id;
-    uint8_t volume_id_string[11];
-    uint8_t system_id_string[8];
+    uint8_t volume_id_string[11]; // padded with spaces
+    uint8_t system_id_string[8]; // represents the fat filesystem type, padded with spaces
 } __attribute__((packed));
 
     // refers to the information defined in boot.asm
@@ -52,6 +52,21 @@ struct fat_header {
     uint32_t hidden_sectors;
     uint32_t sectors_big;
 } __attribute__((packed));
+
+
+// primary fat header that will contain fat16_header and fat16_header_extended
+struct fat_h {
+    struct fat_header primary_header;
+    union fat_h_e { // optional fat extended header 
+        struct fat_header_extended extended_header;
+    } shared;
+};
+
+
+struct fat_directory_item {
+    uint8_t filename[8]; // filename and ext are "8.3" filename. This is first 8 bytes
+    uint8_t ext[3]; // last 3 extension bytes of a filename
+};
 
 
 // define before we create  struct
