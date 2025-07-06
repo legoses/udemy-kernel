@@ -66,6 +66,16 @@ struct fat_h {
 struct fat_directory_item {
     uint8_t filename[8]; // filename and ext are "8.3" filename. This is first 8 bytes
     uint8_t ext[3]; // last 3 extension bytes of a filename
+    uint8_t attrbiute;
+    uint8_t reserved;
+    uint8_t creation_time_tenths_of_a_sec;
+    uint16_t creation_time;
+    uint16_t creation_date;
+    uint16_t last_access;
+    uint16_t high_16_bits_first_cluster; // high 16 bits of the address of the first cluster of this directory item
+    uint16_t last_mod_time;
+    uint16_t last_mod_date;
+    uint16_t low_16_bits_first_cluster;
 };
 
 
