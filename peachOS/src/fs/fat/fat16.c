@@ -1,5 +1,7 @@
 #include "fat16.h"
 #include "string/string.h"
+#include "disk/disk.h"
+#include "disk/streamer.h"
 #include "status.h"
 #include <stdint.h>
 
@@ -72,11 +74,53 @@ struct fat_directory_item {
     uint16_t creation_time;
     uint16_t creation_date;
     uint16_t last_access;
-    uint16_t high_16_bits_first_cluster; // high 16 bits of the address of the first cluster of this directory item
+    // high 16 bits of the address of the first cluster of this directory item. if this is a subdirectory, this is the  high 16 bits of where the directories are stored. If this is a file, it is the first cluster containing the file contends
+    uint16_t high_16_bits_first_cluster; 
     uint16_t last_mod_time;
     uint16_t last_mod_date;
     uint16_t low_16_bits_first_cluster;
+    uint32_t filesize;
+} __attribute__((packed));
+
+
+struct fat_directory {
+    struct fat_directory_item *item; 
+    int total; // total number of items in item array
+    int sector_pos; // first sector the fat directory data is stored at
+    int ending_sector_pos; // last sector fat directory is stored
 };
+
+
+struct fat_item {
+    union { // unions share the same memory, which allows use of the same structure for multiple possible data types, while only allocating the required amount for one
+        struct fat_directory_item *item;
+        struct fat_directory *directory;
+    };
+
+    FAT_ITEM_TYPE type; // equal to either FAT_ITEM_TYPE_DIRECTORY or FAT_ITEM_TYPE_FILE
+};
+
+
+// this will be used when fopen is called
+struct fat_item_descriptor {
+    struct fat_item *item; // stored the item being opened
+    uint32_t pos; // position we are seeking in the file
+};
+
+
+struct fat_private {
+    struct fat_h header;
+    struct fat_directory root_directory;
+
+    // used to stream data clusters
+    struct disk_stream *cluster_read_stream;
+
+    //used to stream the file allocation table
+    struct disk_stream *fat_read_stream;
+
+    // used in situations where we atream the directory
+    struct disk_stream *directory_stream;
+}
 
 
 // define before we create  struct
