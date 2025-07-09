@@ -2,6 +2,7 @@
 #include "string/string.h"
 #include "disk/disk.h"
 #include "disk/streamer.h"
+#include "memory/memory.h"
 #include "status.h"
 #include <stdint.h>
 
@@ -138,9 +139,25 @@ struct filesystem *fat16_init() {
 }
 
 
+static void fat16_init_private(struct disk disk*, struct fat_private *private) {
+    //zero out fat16_private memory
+    memset(private, 0, sizeof(struct fat_private));
+    private->cluster_read_stream = diskstreamer_new(disk->id); // diskstreamer reuturns an object bound to the idsk, and allows us to read an arbitrary amount of bytes from the disk
+    private->fat_read_stream = diskstreamer_new(disk->id);
+    private->directory_stream = diskstreamer_new(disk->id);
+}
+
+
 // params are taken from FS_RESOLVE_FUNCTION pointer defined in file.h
 int fat16_resolve(struct disk *disk) {
-    return 0;
+    int res = 0;
+    // holds the root filesystem in memory
+    struct fat_private *fat_private = kzalloc(sizeof(struct fat_private));
+    fat16_init_private(disk, fat_private);
+
+    struct disk_stream *stream = diskstreamer_new(disk->id);
+
+    return res;
 }
 
 
