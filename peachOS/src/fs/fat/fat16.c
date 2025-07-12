@@ -45,7 +45,7 @@ struct fat_header {
     uint16_t bytes_per_sector;
     uint8_t sectors_per_cluster;
     uint16_t reserved_sectors;
-    uint8_t fat_copies;
+    uint8_t fat_copies; // number of file allocation tables on the storace media
     uint16_t root_dir_entries;
     uint16_t number_of_sectors;
     uint8_t media_type;
@@ -148,6 +148,52 @@ static void fat16_init_private(struct disk disk*, struct fat_private *private) {
 }
 
 
+int fat16_get_root_directory(struct disk *disk, struct fat_private *fat_private, struct fat_directory *directory) {
+    int res = 0;
+    struct fat_header *primary_header = &fat_private->header.primary_header;
+    int root_dir_sector_pos = (primary_header->fat_copies * primary_header->sectors_per_fat) + primary_header->reserved_sectors; // calculate first sector of root directory
+    int root_dir_entries = fat_private->header.primary_header.root_dir_entries;
+    int root_dir_size = (root_dir_entries * sizeof(struct fat_directory_item));
+    int total_sectors = root_dir_size / disk->sector_size;
+
+    if(root_dir_size % disk->sector_size) { // if this return a value other than 0, add a sector to total count
+        total_sectors += 1;
+    }
+
+    int total_items = fat16_get_total_items_for_directory(fat_private, root_dir_sector_pos);
+
+    // allocate directory struct to store root directory
+    struct fat_directory_item *dir = kzalloc(root_dir_size);
+    if(!dir) {
+        res = -ENOMEM;
+        goto out;
+    }
+
+    // seek the beginning of the root directory
+    struct disk_stream *stream = fat_private->directory_stream;
+    if(diskstreamer_seek(stream, fat16_sector_to_absolute(root_dir_sector_pos)) != PEACHOS_ALL_OK) {
+        res = -EIO;
+        goto out;
+    }
+
+    // read root directory from disk into memory
+    if(diskstreamer_read(stream, dir, root_dir_size) != PEACHOS_ALL_OK) {
+        res = -EIO;
+        goto out;
+    }
+
+    // move data into directory struct passed by function caller
+    directory->item = dir;
+    directory->total = total_items;
+    directory->sector_pos = root_dir_sector_pos;
+    directory->ending_sector_pos = root_dir_sector_pos + (root_dir_size / disk->sector_size);
+
+out:
+
+    return res;
+}
+
+
 // params are taken from FS_RESOLVE_FUNCTION pointer defined in file.h
 int fat16_resolve(struct disk *disk) {
     int res = 0;
@@ -155,8 +201,31 @@ int fat16_resolve(struct disk *disk) {
     struct fat_private *fat_private = kzalloc(sizeof(struct fat_private));
     fat16_init_private(disk, fat_private);
 
+    // create disk stream
     struct disk_stream *stream = diskstreamer_new(disk->id);
+    if(!stream) {
+        res = -ENOMEM;
+        goto out;
+    }
 
+    // read raw header data from disk into header struct
+    if(diskstream_read(stream, &fat_private->header, sizeof(fat_private->header)) != PEACHOS_ALL_OK) {
+        res = -EIO;
+        goto out;
+    }
+
+    // check to see if this data contains the fat16 signature
+    if(fat_private->header.shared.extended_header.signature != 0x29) { // 0x29 is a signature that represents fat16 extended. It means that the following two fields are not zero. Offser of 38
+        res = -EFSNOTUS;
+        goto out;
+    }
+
+    if(fat16_get_root_directory(disk, fat_private, &fat_private->root_directory) != PEACHOS_ALL_OK) {
+        res = -EIO;
+        goto out;
+    }
+
+out:
     return res;
 }
 
