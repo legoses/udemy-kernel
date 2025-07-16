@@ -148,6 +148,35 @@ static void fat16_init_private(struct disk disk*, struct fat_private *private) {
 }
 
 
+// convert location from sector offset to absolute byte offset from zero
+int fat16_sector_to_absolute(struct disk *disk, int sector) {
+    return sector * disk->sector_size;
+}
+
+
+int fat16_get_total_items_for_directory(struct disk *disk, uint32_t directory_start_sector) {
+    struct fat_directory_item item;
+    struct fat_directory_item empty_item;
+    memset(&empty_item, 0, sizeof(empty_item));
+
+    struct fat_private *fat_private = disk->fs_private;
+
+    int res = 0;
+    int i = 0;
+    int directory_start_pos = directory_start_sector * disk->sector_size;
+    struct disk_stream *stream = fat_private->directory_stream;
+    diskstreamer_seek(stream, directory_start_pos); // set starting position for disk read
+    while(1) {
+        if(diskstreamer_read(stream, &item, sizeof(item)) != PEACHOS_ALL_OK) {
+            res = -EIO;
+            goto out;
+        }
+    }
+out:
+    return res;
+}
+
+
 int fat16_get_root_directory(struct disk *disk, struct fat_private *fat_private, struct fat_directory *directory) {
     int res = 0;
     struct fat_header *primary_header = &fat_private->header.primary_header;
