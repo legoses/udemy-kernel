@@ -2,6 +2,7 @@
 #include "string/string.h"
 #include "disk/disk.h"
 #include "disk/streamer.h"
+#include "memory/heap/kheap.h"
 #include "memory/memory.h"
 #include "status.h"
 #include <stdint.h>
@@ -121,7 +122,7 @@ struct fat_private {
 
     // used in situations where we atream the directory
     struct disk_stream *directory_stream;
-}
+};
 
 
 // define before we create  struct
@@ -139,7 +140,7 @@ struct filesystem *fat16_init() {
 }
 
 
-static void fat16_init_private(struct disk disk*, struct fat_private *private) {
+static void fat16_init_private(struct disk *disk, struct fat_private *private) {
     //zero out fat16_private memory
     memset(private, 0, sizeof(struct fat_private));
     private->cluster_read_stream = diskstreamer_new(disk->id); // diskstreamer reuturns an object bound to the idsk, and allows us to read an arbitrary amount of bytes from the disk
@@ -181,13 +182,15 @@ int fat16_get_total_items_for_directory(struct disk *disk, uint32_t directory_st
         }
 
         // 
-        if(item.filename[0] == 0xE5) { // check if item is unused. 
+        if(item.filename[0] == 0xE5) { // check if item is unused. FAT16 docs state 0xE5 indicates a free directory
             continue; // restart loop, do not iterate
         }
 
         i++;
 
     }
+
+    res = i;
 out:
     return res;
 }
@@ -205,7 +208,7 @@ int fat16_get_root_directory(struct disk *disk, struct fat_private *fat_private,
         total_sectors += 1;
     }
 
-    int total_items = fat16_get_total_items_for_directory(fat_private, root_dir_sector_pos);
+    int total_items = fat16_get_total_items_for_directory(disk, root_dir_sector_pos);
 
     // allocate directory struct to store root directory
     struct fat_directory_item *dir = kzalloc(root_dir_size);
@@ -216,7 +219,7 @@ int fat16_get_root_directory(struct disk *disk, struct fat_private *fat_private,
 
     // seek the beginning of the root directory
     struct disk_stream *stream = fat_private->directory_stream;
-    if(diskstreamer_seek(stream, fat16_sector_to_absolute(root_dir_sector_pos)) != PEACHOS_ALL_OK) {
+    if(diskstreamer_seek(stream, fat16_sector_to_absolute(disk, root_dir_sector_pos)) != PEACHOS_ALL_OK) {
         res = -EIO;
         goto out;
     }
@@ -254,7 +257,7 @@ int fat16_resolve(struct disk *disk) {
     }
 
     // read raw header data from disk into header struct
-    if(diskstream_read(stream, &fat_private->header, sizeof(fat_private->header)) != PEACHOS_ALL_OK) {
+    if(diskstreamer_read(stream, &fat_private->header, sizeof(fat_private->header)) != PEACHOS_ALL_OK) {
         res = -EIO;
         goto out;
     }
@@ -270,7 +273,20 @@ int fat16_resolve(struct disk *disk) {
         goto out;
     }
 
+    // bind our filesystem to the disk
+    disk->fs_private = fat_private; // assign fs to disk as void
+    disk->resolve = &fat16_fs; // filesystem resolve and call functions
+
 out:
+    if(stream) {
+        diskstream_close(stream);
+    }
+
+    if(res < 0) {
+        kfree(fat_private);
+        disk->fs_private = 0;
+    }
+
     return res;
 }
 
