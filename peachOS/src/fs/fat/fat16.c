@@ -34,7 +34,7 @@ struct fat_header_extended {
     uint8_t drive_number;
     uint8_t win_nt_bit; //only used for devices running windows nt, otherwise reserved
     uint8_t signature;
-    uint8_t volume_id;
+    uint32_t volume_id;
     uint8_t volume_id_string[11]; // padded with spaces
     uint8_t system_id_string[8]; // represents the fat filesystem type, padded with spaces
 } __attribute__((packed));
@@ -245,9 +245,15 @@ out:
 // params are taken from FS_RESOLVE_FUNCTION pointer defined in file.h
 int fat16_resolve(struct disk *disk) {
     int res = 0;
+
     // holds the root filesystem in memory
     struct fat_private *fat_private = kzalloc(sizeof(struct fat_private));
     fat16_init_private(disk, fat_private);
+    
+    // bind our filesystem to the disk
+    // these must be assigned befire calling fat16_get_root_directory because items are assigned to disk->fs_private. These will be overwritten if fs_private is assigned after this function call
+    disk->fs_private = fat_private; // assign fs to disk as void
+    disk->resolve = &fat16_fs; // filesystem resolve and call functions
 
     // create disk stream
     struct disk_stream *stream = diskstreamer_new(disk->id);
@@ -273,9 +279,6 @@ int fat16_resolve(struct disk *disk) {
         goto out;
     }
 
-    // bind our filesystem to the disk
-    disk->fs_private = fat_private; // assign fs to disk as void
-    disk->resolve = &fat16_fs; // filesystem resolve and call functions
 
 out:
     if(stream) {
