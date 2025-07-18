@@ -165,12 +165,28 @@ int fat16_get_total_items_for_directory(struct disk *disk, uint32_t directory_st
     int i = 0;
     int directory_start_pos = directory_start_sector * disk->sector_size;
     struct disk_stream *stream = fat_private->directory_stream;
-    diskstreamer_seek(stream, directory_start_pos); // set starting position for disk read
+    if(diskstreamer_seek(stream, directory_start_pos) != PEACHOS_ALL_OK) { // set starting position for disk read
+        res = -EIO;
+        goto out;
+    } 
     while(1) {
-        if(diskstreamer_read(stream, &item, sizeof(item)) != PEACHOS_ALL_OK) {
+        // this will increment our position every time we call diskstreamer_read
+        if(diskstreamer_read(stream, &item, sizeof(item)) != PEACHOS_ALL_OK) { // read through, size of 1 fat_directory_item at a time
             res = -EIO;
             goto out;
         }
+        
+        if(item.filename[0] == 0x00) { // if we find an empry file name break out of loop, we have discovered all items in current directory
+            break;
+        }
+
+        // 
+        if(item.filename[0] == 0xE5) { // check if item is unused. 
+            continue; // restart loop, do not iterate
+        }
+
+        i++;
+
     }
 out:
     return res;
