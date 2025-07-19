@@ -1,6 +1,7 @@
 #include "file.h"
 #include "config.h"
 #include "memory/memory.h"
+#include "string/string.h"
 #include "status.h"
 #include "disk/disk.h"
 #include "fat/fat16.h"
@@ -127,7 +128,7 @@ FILE_MODE file_get_mode_by_string(const char *str) {
 }
 
 
-int fopen(const char *filename, const char *mode) {
+int fopen(const char *filename, const char *mode_str) {
     int res = 0;
     struct path_root *root_path = pathparser_parse(filename, NULL);
 
@@ -138,15 +139,40 @@ int fopen(const char *filename, const char *mode) {
     }
 
     // ensure the drive exists
-    struct disk *disk = disk_get(root_path->drive_no) // all this does is make sure we are getting disk 0, since we only support one disk
-    if(!disk || !disk->filesystem) {
+    struct disk *disk = disk_get(root_path->drive_no); // all this does is make sure we are getting disk 0, since we only support one disk
+    if(!disk || !disk->resolve) {
         res = -EIO;
         goto out;
     }
 
+    // get the file mode to open the file in
+    FILE_MODE mode = file_get_mode_by_string(mode_str);
+    if(mode == FILE_MODE_INVALID) {
+        res = -EINVARG;
+        goto out;
+    }
 
+    // fall the filesystem open function and pass the file path
+    void *descriptor_private_data = disk->resolve->open(disk, root_path->first, mode);
+    if(ISERR(descriptor_private_data)) {
+        res = ERROR_I(descriptor_private_data);
+        goto out;
+    }
 
+    struct file_descriptor *desc = 0;
+    res = file_new_descriptor(&desc);
+    if(res < 0) {
+        goto out;
+    }
 
+    desc->filesystem = disk->resolve;
+    desc->private = descriptor_private_data;
+    desc->disk = disk;
+
+    res = desc->index;
 out:
+    // fopen shouldnt return negative values
+    if(res < 0)
+        res = 0;
     return res; 
 }
