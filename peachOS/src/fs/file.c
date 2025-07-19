@@ -2,6 +2,7 @@
 #include "config.h"
 #include "memory/memory.h"
 #include "status.h"
+#include "disk/disk.h"
 #include "fat/fat16.h"
 #include "memory/heap/kheap.h"
 #include "kernel.h"
@@ -108,6 +109,44 @@ struct filesystem *fs_resolve(struct disk *disk) {
 }
 
 
+// FILE_MODE is just an enum that represends the mode a file is opened in
+FILE_MODE file_get_mode_by_string(const char *str) {
+    FILE_MODE mode = FILE_MODE_INVALID;
+
+    if(strncmp(str, "r", 1) == 0) {
+        mode = FILE_MODE_READ;
+    }
+    else if(strncmp(str, "w", 1) == 0) {
+        mode = FILE_MODE_WRITE;
+    }
+    else if(strncmp(str, "a", 1) == 0) {
+        mode = FILE_MODE_APPEND;
+    }
+
+    return mode;
+}
+
+
 int fopen(const char *filename, const char *mode) {
-    return -EIO; // return IO error because this has not yet been implemented
+    int res = 0;
+    struct path_root *root_path = pathparser_parse(filename, NULL);
+
+    // make sure we have a root path, and that the path passed is not just 0:/, it is a file eg. 0:/file.txt
+    if(!root_path || !root_path->first) {
+        res = -EINVARG;
+        goto out;
+    }
+
+    // ensure the drive exists
+    struct disk *disk = disk_get(root_path->drive_no) // all this does is make sure we are getting disk 0, since we only support one disk
+    if(!disk || !disk->filesystem) {
+        res = -EIO;
+        goto out;
+    }
+
+
+
+
+out:
+    return res; 
 }

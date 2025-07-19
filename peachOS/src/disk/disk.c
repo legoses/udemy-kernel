@@ -51,6 +51,8 @@ void disk_search_and_init() {
 }
 
 
+
+//right now this just checks to see if the disk number is zero since we do not support more than one disks yet
 struct disk *disk_get(int index) {
     if(index != 0) {
         return 0;
