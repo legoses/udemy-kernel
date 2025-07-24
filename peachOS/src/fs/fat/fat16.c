@@ -6,6 +6,7 @@
 #include "memory/memory.h"
 #include "status.h"
 #include <stdint.h>
+#include "kernel.h"
 
 
 #define PEACHOS_FAT16_SIGNATURE 0x29
@@ -104,7 +105,7 @@ struct fat_item {
 
 
 // this will be used when fopen is called
-struct fat_item_descriptor {
+struct fat_file_descriptor {
     struct fat_item *item; // stored the item being opened
     uint32_t pos; // position we are seeking in the file
 };
@@ -294,7 +295,38 @@ out:
 }
 
 
+struct fat_item *fat16_get_directory_entry(struct disk *disk, struct path_part *path) {
+    struct fat_private *fat_private = disk->fs_private;
+    struct fat_item *current_item = 0;
+    struct fat_item *root_item = fat16_find_item_in_directory(disk, &fat_private->root_directory, path->part);
+
+    if(!root_item) {
+        goto out;
+    }
+
+out:
+    return current_item;
+}
+
+
 // these params are taken from FS_OPEN_FUNCTION pointer in file.h
 void *fat16_open(struct disk *disk, struct path_part *path, FILE_MODE mode) {
-    return 0;
+    if(mode != FILE_MODE_READ) {
+        return ERROR(-ERDONLY);
+    }
+
+    struct fat_file_descriptor *descriptor = NULL;
+    descriptor = kzalloc(sizeof(struct fat_file_descriptor)); // allocate memory and make sure it exists
+    if(!descriptor) {
+        return ERROR(-ENOMEM);
+    }
+
+    descriptor->item = fat16_get_directory_entry(disk, path); // search for file that has been passed and create an object for it
+    if(!descriptor->item) {
+        return ERROR(-EIO);
+    }
+
+    descriptor->pos = 0;
+
+    return descriptor;
 }
