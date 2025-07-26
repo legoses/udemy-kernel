@@ -295,6 +295,54 @@ out:
 }
 
 
+// filenames are 8 bytes. Files that do not use the full 8 bytes will pad the excess bytes with spaces. This iterates through the filename until a null or space is found to remove unnessecary padding
+void fat16_to_proper_string(char **out, const char *in) {
+    while(*in != 0x00 && *in != 0x20) { // while the character stores at the current pointer position does not equal null or space
+        **out = *in; // in this case, **out is a pointer to a poitner, not an array of strings, so **out is also iterating character by character
+        *out += 1; // iterate position of out to next character
+        in += 1; //iterate to next character
+    }
+
+    if(*in == 0x20) {
+        **out = 0x00; // add null terminator to end of string
+    }
+}
+
+
+void fat16_get_full_relative_filename(struct fat_directory_item *item, char *out, int max_len) {
+    memset(out, 0x00, max_len);
+    char *out_tmp = out;
+    fat16_to_proper_string(&out_tmp, (const char*) item->filename);
+
+    if(item->ext[0] != 0x00 && item->ext != 0x20) { // if string is not terminated with null or space
+        *out_tmp++ = '.'; // replace null terminator with a '.' and then iterate pointer
+        fat16_to_proper_string(&out_tmp, (const char*)item->ext); // get extension
+    }
+
+}
+
+
+// pass disk, directory, and name of the file you want to resolve
+struct fat_item *fat16_find_item_in_directory(struct disk *disk, struct fat_directory *directory, const char *name) {
+    struct fat_item *f_item = 0;
+    char tmp_filename[PEACHOS_MAX_PATH];
+
+    // loop through total number of entries in this dierctory and compare to passed file name
+    for(int i = 0; i < directory->total; i++) {
+        // get full file name of item in directory and store it in tmp_filename array
+        fat16_get_full_relative_filename(directory->item[i], tmp_filename, sizeof(tmp_filename));
+
+        if(istrncmp(tmp_filename, name, sizeof(tmp_filename)) == 0) {
+            // item has been found, create new fat item
+            f_item = fat16_new_fat_item_for_directory_item(disk, &directory->item[i]);
+        }
+    }
+
+    return f_item;
+}
+
+
+
 struct fat_item *fat16_get_directory_entry(struct disk *disk, struct path_part *path) {
     struct fat_private *fat_private = disk->fs_private;
     struct fat_item *current_item = 0;
